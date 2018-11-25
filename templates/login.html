@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% load static %}
+	{% load static %}
 	<meta charset="utf-8">
 	<link href="{% static 'css/login.css' %}" rel="stylesheet">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
@@ -30,7 +30,8 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="https://phpoll.com/login/process" method="post" role="form" style="display: block;">
+								<form id="login-form" action="." method="POST" role="form" style="display: block;">
+									{% csrf_token %}
 									<div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
 									</div>
@@ -58,7 +59,8 @@
 										</div>
 									</div>
 								</form>
-								<form id="register-form" action="https://phpoll.com/register/process" method="post" role="form" style="display: none;">
+								<form id="register-form" action="." method="POST" role="form" style="display: none;">
+									{% csrf_token %}
 									<div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
 									</div>
@@ -86,6 +88,5 @@
 			</div>
 		</div>
 	</div>
-<script src="{% static 'js/login.js' %}"></script>
 </body>
 </html>

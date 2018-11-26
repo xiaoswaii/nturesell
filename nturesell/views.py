@@ -33,6 +33,8 @@ def register(request):
 def login(request):
     if request.user.is_authenticated:
         return redirect('/index/')
+    if request.method =="POST":
+        user=request.POST["user"]
         password=request.POST["password"]
         user=auth.authenticate(username=user,password=password)
         if user is not None and user.is_active:
@@ -43,3 +45,10 @@ def login(request):
         else:
             message='尚未登入'
     return render(request,"login.html",locals())
+
+def profile(request):
+    if request.user.is_authenticated:
+        profile=User.objects.get(user=request.user.username)
+        return redirect(request,'profile.html',locals())
+    return render(request,'profile.html',locals())
+

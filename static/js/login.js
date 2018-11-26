@@ -5,6 +5,7 @@ $(function() {
  		$("#register-form").fadeOut(100);
 		$('#register-form-link').removeClass('active');
 		$(this).addClass('active');
+		window.location.replace("/register/");
 		e.preventDefault();
 	});
 	$('#register-form-link').click(function(e) {

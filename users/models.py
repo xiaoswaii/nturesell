@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User as AbstractUser
 from django.conf import settings
 from datetime import datetime, timedelta
 
@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 # Create your models here.
 class User(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE , related_name = "account")
-    uname = models.CharField(max_length = 20 , blank = False)
     nickname = models.CharField(max_length = 20)
     ntumail = models.CharField(max_length = 20 , blank = False)
     profile = models.ImageField(upload_to = 'profiles', blank=True)
@@ -29,7 +28,7 @@ class Product(models.Model):
 
 
 class Message(models.Model):
-    sent_frome = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete = models.CASCADE, related_name = "sent_from")
+    sent_from = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete = models.CASCADE, related_name = "sent_from")
     sent_to = models.ForeignKey(User, on_delete = models.CASCADE , related_name = "sent_to")
     msg = models.CharField(max_length = 100, blank = False)
     date = models.DateTimeField(auto_now_add = True)

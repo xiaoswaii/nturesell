@@ -2,50 +2,66 @@ from django.shortcuts import render,redirect   # 加入 redirect 套件
 from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
-from django.contrib.auth.models import User as User_Default
+from django.contrib.auth.models import User as AbstractUser
 from users.models import User
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def home(request):
     return render(request, 'home.html')
 
 def register(request):
-    if request.method =="POST":
-        nickname=request.POST["nickname"]
-        uname=request.POST["uname"]
-        ntumail=request.POST["ntumail"]
-        password=request.POST["password"]
-        confirmpassword=request.POST["confirmpassword"]
+    if request.method == "POST":
+        username = request.POST["username"]
+        nickname = request.POST["nickname"]
+        ntumail = request.POST["ntumail"]
+        password = request.POST["password"]
+        confirmpassword = request.POST["confirm-password"]
         if(password == confirmpassword):
             try:
-                user = User_Default.objects.get(username=user)
+                user = AbstractUser.objects.filter(userame = uname)
             except:
-                user= None
+                user = None
+
             if user is not None:
-                    message = "Username used by another"
+                message = "Username used by another"
             else:
-                    user=User_Default.objects.create_user(user, ntumail, password )
-                    User.objects.create(user=user,nickname=nickname,uname = uname , ntumail = ntumail)
+                user = AbstractUser.objects.create_user(username = username, password = password)
+                userinfo  = User.objects.create(user = user , nickname = nickname, ntumail = ntumail)
+                userinfo.save()
+
         else:
-            message="confirm password not exact with password"
+            message= "confirm password is different from password"
+
     return render(request ,"login.html",locals())
 
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('/index/')
-    if request.method =="POST":
-        user=request.POST["user"]
-        password=request.POST["password"]
-        user=auth.authenticate(username=user,password=password)
-        if user is not None and user.is_active:
-            auth.login(request,user)
-            message='登入成功'
-            return redirect('/index')
 
+def authenticate(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = auth.authenticate(username = username, password = password)      
+        if user is not None and user.is_active:
+            auth.login(request, user)
+            return render(request,"home.html", locals())
         else:
             message='尚未登入'
+
+    return render(request,"home.html",locals())
+
+def login(request):
+    if request.method == "POST":
+        try:
+            if request.POST['submit-type'] == "Log In":
+                return authenticate(request)
+            elif request.POST['submit-type'] == "Register Now":
+                return register(request)
+        except:
+            pass
     return render(request,"login.html",locals())
 
+@login_required
 def profile(request):
     if request.user.is_authenticated:
         profile=User.objects.get(user=request.user.username)

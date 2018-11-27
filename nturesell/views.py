@@ -69,3 +69,7 @@ def profile(request):
         return render(request,'profile.html',locals())
     return render(request,'profile.html',locals())
 
+def logout(request):
+	auth.logout(request)  #登出成功清除 Session，重導到<index.html>
+	return redirect('/register')
+

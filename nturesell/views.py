@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html', locals())
 
 def register(request):
     if request.method == "POST":
@@ -41,7 +41,7 @@ def authenticate(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
-        user = auth.authenticate(username = username, password = password)      
+        user = auth.authenticate(username = username, password = password)
         if user is not None and user.is_active:
             auth.login(request, user)
             return render(request,"home.html", locals())
@@ -64,7 +64,8 @@ def login(request):
 @login_required
 def profile(request):
     if request.user.is_authenticated:
-        profile=User.objects.get(user=request.user.username)
-        return redirect(request,'profile.html',locals())
+        print(request.user.username, "hihi")
+        profile=User.objects.get(user__username__contains = request.user.username)
+        return render(request,'profile.html',locals())
     return render(request,'profile.html',locals())
 

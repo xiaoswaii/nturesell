@@ -47,6 +47,7 @@ def authenticate(request):
             return render(request,"home.html", locals())
         else:
             message='尚未登入'
+            return login(request)
 
     return render(request,"home.html",locals())
 
@@ -68,6 +69,10 @@ def profile(request):
         profile=User.objects.get(user__username__contains = request.user.username)
         return render(request,'profile.html',locals())
     return render(request,'profile.html',locals())
+
+@login_required
+def sell(request):
+    return render(request,'sell.html',locals())
 
 def logout(request):
 	auth.logout(request)  #登出成功清除 Session，重導到<index.html>

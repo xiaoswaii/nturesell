@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% load static %} {% block stylesheet %} {% endblock %} {% block nevitem %}
+<li class="nav-item">
+    <a class="nav-link" href="/home">Home
+        <span class="sr-only"></span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#">Selling</a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="/profile">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="#">Contact</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/logout">Log Out</a>
+</li>
+{% endblock %} {% block mainbody %}
+<div class="container">
+    <h2>Sell Something?</h2>
+    <form>
+        <div class="form-group">
+            <label for="aroduct">Product Name:</label>
+            <input type="text" class="form-control" id="productname">
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="password" class="form-control" id="price" placeholder="NTD">
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input type="password" class="form-control" id="amount">
+        </div>
+        <div class="form-group">
+            <label for="amount">Description:</label>
+            <textarea class="form-control" rows="5" id="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Product Photo</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+{% endblock %}

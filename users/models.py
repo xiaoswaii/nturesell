@@ -25,7 +25,7 @@ class Product(models.Model):
     expired_date = models.DateTimeField(default = datetime.now() + timedelta(days = 30))
     profile = models.ImageField(upload_to = 'products', blank = False)
     information = models.CharField(max_length = 200, blank = True)
-
+    productname = models.CharField(max_length = 20, blank = False)
 
 class Message(models.Model):
     sent_from = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete = models.CASCADE, related_name = "sent_from")

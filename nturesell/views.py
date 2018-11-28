@@ -83,3 +83,15 @@ def logout(request):
 	auth.logout(request)  #登出成功清除 Session，重導到<index.html>
 	return redirect('/register')
 
+@login_required
+def chat(request):
+    if 'search' in request.POST:
+        searchname=request.POST["searchname"]
+        if searchname:
+            searchuserresult=User.objects.filter(user__username__contains = searchname)
+            return render(request,'chat.html',locals())
+            
+        else:
+            return render(request,'profile.html',locals())
+            
+    return render(request,'chat.html',locals())

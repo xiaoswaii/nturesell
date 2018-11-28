@@ -72,7 +72,7 @@ def profile(request):
 
 @login_required
 def sell(request):
-    if request.method="POST":
+    if request.method == "POST":
         productname=request.POST["productname"]
         price=request.POST["price"]
         amount=request.POST["amount"]

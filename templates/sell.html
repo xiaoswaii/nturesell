@@ -1,4 +1,8 @@
-{% extends "base.html" %} {% load static %} {% block stylesheet %} {% endblock %} {% block nevitem %}
+{% extends "base.html" %} 
+{% load static %} 
+{% block stylesheet %} 
+{% endblock %} 
+{% block nevitem %}
 <li class="nav-item">
     <a class="nav-link" href="/home">Home
         <span class="sr-only"></span>
@@ -19,22 +23,22 @@
 {% endblock %} {% block mainbody %}
 <div class="container">
     <h2>Sell Something?</h2>
-    <form>
+    <form method="POST" action=".">
         <div class="form-group">
             <label for="aroduct">Product Name:</label>
-            <input type="text" class="form-control" id="productname">
+            <input type="text" class="form-control" name="productname" id="productname">
         </div>
         <div class="form-group">
             <label for="price">Price:</label>
-            <input type="password" class="form-control" id="price" placeholder="NTD">
+            <input type="password" class="form-control" name="price" id="price" placeholder="NTD">
         </div>
         <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="password" class="form-control" id="amount">
+            <input type="password" class="form-control" name="amount" id="amount">
         </div>
         <div class="form-group">
             <label for="amount">Description:</label>
-            <textarea class="form-control" rows="5" id="description"></textarea>
+            <textarea class="form-control" rows="5" name="information" id="description"></textarea>
         </div>
         <div class="form-group">
             <label for="exampleFormControlFile1">Product Photo</label>

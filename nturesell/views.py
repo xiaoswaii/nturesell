@@ -72,6 +72,11 @@ def profile(request):
 
 @login_required
 def sell(request):
+    if request.method="POST":
+        productname=request.POST["productname"]
+        price=request.POST["price"]
+        amount=request.POST["amount"]
+        information=request.POST["information"]
     return render(request,'sell.html',locals())
 
 def logout(request):

@@ -74,11 +74,8 @@ def profile(request):
 @login_required
 def sell(request):
     if request.method == "POST":
-        productname = request.POST["productname"]
-        price = request.POST["price"]
-        amount = request.POST["amount"]
-        information = request.POST["information"]
         form = UploadProductForm(request.POST, request.FILES)
+        print(request.POST)
         if form.is_valid():
             form.save()
             return redirect('home')

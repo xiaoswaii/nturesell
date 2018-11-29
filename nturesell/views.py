@@ -89,5 +89,16 @@ def logout(request):
 	auth.logout(request)
 	return redirect('/register')
 
+@login_required
 def chat(request):
-    pass
+    if 'search' in request.POST:
+        searchname=request.POST["searchname"]
+        if searchname:
+            searchuserresult=User.objects.filter(user__username__contains = searchname)
+            return render(request,'chat.html',locals()) 
+        else:
+            return render(request,'chat.html',locals())            
+    if 'talkto' in request.POST:
+        return render(request,'chatroom.html',locals())
+    return render(request,'chat.html',locals())
+

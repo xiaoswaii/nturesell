@@ -18,14 +18,14 @@ class Wallet(models.Model):
 
 
 class Product(models.Model):
-    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "seller")
+    #seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "seller")
+    productname = models.CharField(max_length = 20, blank = False)
     price = models.IntegerField(blank=False)
     amount = models.IntegerField(default = 1)
     released_date = models.DateTimeField(auto_now_add = True)
     expired_date = models.DateTimeField(default = datetime.now() + timedelta(days = 30))
-    profile = models.ImageField(upload_to = 'products', blank = False)
+    profile = models.FileField(upload_to = 'products', blank = False)
     information = models.CharField(max_length = 200, blank = True)
-    productname = models.CharField(max_length = 20, blank = False)
 
 class Message(models.Model):
     sent_from = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete = models.CASCADE, related_name = "sent_from")

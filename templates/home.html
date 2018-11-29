@@ -26,111 +26,25 @@
     </h1>
 
     <div class="row">
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Product One</a>
-                    </h4>
-                    <p class="card-text">產品一號</p>
-
+        {% for product in products %}
+            <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="card h-100">
+                    <a href="#"><img class="card-img-top" src="/media/{{product.profile}}"></a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">{{product.productname}}</a>
+                        </h4>
+                        <p class="card-text">{{product.amount}}</p>
+                        <p class="card-text">{{product.price}}</p>
+                    </div>
+                    <input type="submit" value="細節" id="details"></input>
                 </div>
-                <input type="submit" value="細節" id="details"></input>
             </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Product Two</a>
-                    </h4>
-                    <p class="card-text">產品二號</p>
-
-                </div>
-                <input type="submit" value="細節" id="details"></input>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Produck Three</a>
-                    </h4>
-                    <p class="card-text">產品三號</p>
-
-                </div>
-                <input type="submit" value="細節" id="details"></input>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Product Four</a>
-                    </h4>
-                    <p class="card-text">產品四號</p>
-
-                </div>
-                <input type="submit" value="細節" id="details"></input>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Product Five</a>
-                    </h4>
-                    <p class="card-text">產品五號</p>
-
-                </div>
-                <input type="submit" value="細節" id="details"></input>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Product Six</a>
-                    </h4>
-                    <p class="card-text">產品六號</p>
-
-                </div>
-                <input type="submit" value="細節" id="details"></input>
-            </div>
-        </div>
+        {% endfor %}
     </div>
     <!-- /.row -->
 
-    <!-- Pagination -->
-    <ul class="pagination justify-content-center">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-            </a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-            </a>
-        </li>
-    </ul>
+    
 
 </div>
 <!-- /.container -->

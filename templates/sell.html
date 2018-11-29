@@ -16,29 +16,30 @@
 <li class="nav-item">
     <a class="nav-link" href="/logout">Log Out</a>
 </li>
-{% endblock %} {% block mainbody %}
+{% endblock %} 
+{% block mainbody %}
 <div class="container">
     <h2>Sell Something?</h2>
-    <form method="POST" action=".">
+    <form method="POST" action="." enctype="multipart/form-data">
         <div class="form-group">
-            <label for="aroduct">Product Name:</label>
+            <label for="productname">Product Name:</label>
             <input type="text" class="form-control" name="productname" id="productname">
         </div>
         <div class="form-group">
             <label for="price">Price:</label>
-            <input type="password" class="form-control" name="price" id="price" placeholder="NTD">
+            <input type="text" class="form-control" name="price" id="price" placeholder="NTD">
         </div>
         <div class="form-group">
             <label for="amount">Amount:</label>
-            <input type="password" class="form-control" name="amount" id="amount">
+            <input type="text" class="form-control" name="amount" id="amount">
         </div>
         <div class="form-group">
             <label for="amount">Description:</label>
-            <textarea class="form-control" rows="5" name="information" id="description"></textarea>
+            <textarea class="form-control" rows="5" name="information" id="information"></textarea>
         </div>
         <div class="form-group">
-            <label for="exampleFormControlFile1">Product Photo</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            <label for="image">Product Photo</label>
+            <input type="file" class="form-control-file" name = "profile" id="profile">
         </div>
         <button type="submit" class="btn btn-success">Submit</button>
     </form>

@@ -3,12 +3,14 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User as AbstractUser
-from users.models import User
+from users.models import User, Product
+from users.form import  UploadProductForm
 from django.contrib.auth.decorators import login_required
 
 
 @login_required
 def home(request):
+    products = Product.objects.all()
     return render(request, 'home.html', locals())
 
 def register(request):
@@ -30,7 +32,6 @@ def register(request):
                 user = AbstractUser.objects.create_user(username = username, password = password)
                 userinfo  = User.objects.create(user = user , nickname = nickname, ntumail = ntumail)
                 userinfo.save()
-
         else:
             message= "confirm password is different from password"
 
@@ -73,25 +74,19 @@ def profile(request):
 @login_required
 def sell(request):
     if request.method == "POST":
-        productname=request.POST["productname"]
-        price=request.POST["price"]
-        amount=request.POST["amount"]
-        information=request.POST["information"]
+        productname = request.POST["productname"]
+        price = request.POST["price"]
+        amount = request.POST["amount"]
+        information = request.POST["information"]
+        form = UploadProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
     return render(request,'sell.html',locals())
 
+
 def logout(request):
-	auth.logout(request)  #登出成功清除 Session，重導到<index.html>
+	auth.logout(request)
 	return redirect('/register')
 
-@login_required
 def chat(request):
-    if 'search' in request.POST:
-        searchname=request.POST["searchname"]
-        if searchname:
-            searchuserresult=User.objects.filter(user__username__contains = searchname)
-            return render(request,'chat.html',locals())
-            
-        else:
-            return render(request,'profile.html',locals())
-            
-    return render(request,'chat.html',locals())
+    pass

@@ -23,6 +23,9 @@ STATIC_ROOT = os.path.join(BASE_DIR,"static")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'us=&%$ncr@yuvsns=@ugna@846&4nf9fl#@7q)e*=wmvj7_t@@'
 

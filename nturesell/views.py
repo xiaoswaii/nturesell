@@ -45,7 +45,7 @@ def authenticate(request):
         user = auth.authenticate(username = username, password = password)
         if user is not None and user.is_active:
             auth.login(request, user)
-            return render(request,"home.html", locals())
+            return redirect('home')
         else:
             message='尚未登入'
             return login(request)
@@ -81,6 +81,7 @@ def sell(request):
         form = UploadProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect('home')
     return render(request,'sell.html',locals())
 
 

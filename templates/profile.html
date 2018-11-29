@@ -1,5 +1,9 @@
-{% extends "base.html" %} {% load static %} {% block stylesheet %}
-<link href="{% static 'css/profile.css' %}" rel="stylesheet"> {% endblock %} {% block nevitem %}
+{% extends "base.html" %}
+{% load static %} 
+{% block stylesheet %}
+<link href="{% static 'css/profile.css' %}" rel="stylesheet"> 
+{% endblock %} 
+{% block nevitem %}
 <li class="nav-item">
     <a class="nav-link" href="/home">Home
         <span class="sr-only"></span>
@@ -17,10 +21,15 @@
 <li class="nav-item">
     <a class="nav-link" href="/logout">Log Out</a>
 </li>
-{% endblock %} {% block mainbody %}
+{% endblock %} 
+{% block mainbody %}
 <div id="namecard">
-    <img src={ {profile.profile}} alt="MyHandsomePhoto">
-    <div id="right">
+    {% if profile.profile %}
+        <img src= "{{profile.profile}}" alt="/static/images/default.jpg">
+    {% else %}    
+        <img src= "/static/images/default.png" alt="/static/images/default.jpg">
+    {% endif %}
+    <div id= "right">
         帳號：{{profile.user}} <br> 暱稱：{{profile.nickname}} <br> 電子郵件：{{profile.ntumail}}
         <br>
     </div>

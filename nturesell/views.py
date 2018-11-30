@@ -95,9 +95,9 @@ def chat(request):
         searchname=request.POST["searchname"]
         if searchname:
             searchuserresult=User.objects.filter(user__username__contains = searchname)
-            return render(request,'chat.html',locals()) 
+            return render(request,'chat.html',locals())
         else:
-            return render(request,'chat.html',locals())            
+            return render(request,'chat.html',locals())
     if 'talkto' in request.POST:
         sender=request.user.username
         receiver=request.POST['receiver']

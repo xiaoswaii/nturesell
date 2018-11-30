@@ -18,7 +18,7 @@ class Wallet(models.Model):
 
 
 class Product(models.Model):
-    #seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "seller")
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "seller")
     productname = models.CharField(max_length = 20, blank = False)
     price = models.IntegerField(blank=False)
     amount = models.IntegerField(default = 1)

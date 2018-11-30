@@ -12,7 +12,9 @@ from itertools import chain
 def home(request):
     if 'searchproduct' in request.POST:
         productname=request.POST["productname"]
-        products=Product.objects.filter(productname__icontains=productname)
+        products1=Product.objects.filter(productname__icontains=productname)
+        products2=Product.objects.filter(information__icontains=productname)
+        products=(list(chain(products1,products2)))
     else:
         products = Product.objects.all()
     return render(request, 'home.html', locals())

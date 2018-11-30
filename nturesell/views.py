@@ -3,10 +3,10 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User as AbstractUser
-from users.models import User, Product
+from users.models import User, Product, Message
 from users.form import  UploadProductForm
 from django.contrib.auth.decorators import login_required
-
+from itertools import chain
 
 @login_required
 def home(request):
@@ -99,6 +99,24 @@ def chat(request):
         else:
             return render(request,'chat.html',locals())            
     if 'talkto' in request.POST:
+        sender=request.user.username
+        receiver=request.POST['receiver']
+        conversation1=Message.objects.filter(sent_from__username=sender,sent_to__user__username=receiver)
+        conversation2=Message.objects.filter(sent_to__user__username=sender,sent_from__username=receiver)
+        conversation=list(chain(conversation1,conversation2))
+        conversation.sort(key=lambda conversation  : conversation.date, reverse=False)
+        return render(request,'chatroom.html',locals())
+    if 'talking' in request.POST:
+        sender=request.user.username
+        sent_from=AbstractUser.objects.get(username = request.user.username)
+        sent_too=request.POST['receiver']
+        sent_to=User.objects.get(user__username = sent_too)
+        talk=request.POST['talk']
+        conversation=Message.objects.create(sent_from=sent_from,sent_to=sent_to,msg=talk)
+        conversation1=Message.objects.filter(sent_from__username=sender,sent_to__user__username=sent_too)
+        conversation2=Message.objects.filter(sent_to__user__username=sender,sent_from__username=sent_too)
+        conversation=list(chain(conversation1,conversation2))
+        conversation.sort(key=lambda conversation: conversation.date, reverse=False)
         return render(request,'chatroom.html',locals())
     return render(request,'chat.html',locals())
 

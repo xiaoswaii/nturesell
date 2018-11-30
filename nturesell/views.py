@@ -47,8 +47,7 @@ def authenticate(request):
             auth.login(request, user)
             return redirect('home')
         else:
-            message='尚未登入'
-            return login(request)
+            return redirect('home')
 
     return render(request,"home.html",locals())
 
@@ -60,7 +59,8 @@ def login(request):
             elif request.POST['submit-type'] == "Register Now":
                 return register(request)
         except:
-            pass
+            message = "account or password is wrong!!"
+            print(message)
     return render(request,"login.html",locals())
 
 @login_required

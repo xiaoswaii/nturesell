@@ -22,7 +22,7 @@ def register(request):
         confirmpassword = request.POST["confirm-password"]
         if(password == confirmpassword):
             try:
-                user = AbstractUser.objects.filter(userame = uname)
+                user = AbstractUser.objects.filter(username = uname)
             except:
                 user = None
 
@@ -101,8 +101,8 @@ def chat(request):
     if 'talkto' in request.POST:
         sender=request.user.username
         receiver=request.POST['receiver']
-        conversation1=Message.objects.filter(sent_from__username=sender,sent_to__user__username=receiver)
-        conversation2=Message.objects.filter(sent_to__user__username=sender,sent_from__username=receiver)
+        conversation1=Message.objects.filter(sent_from__username=sender,sent_to__username=receiver)
+        conversation2=Message.objects.filter(sent_to__username=sender,sent_from__username=receiver)
         conversation=list(chain(conversation1,conversation2))
         conversation.sort(key=lambda conversation  : conversation.date, reverse=False)
         return render(request,'chatroom.html',locals())
@@ -110,11 +110,11 @@ def chat(request):
         sender=request.user.username
         sent_from=AbstractUser.objects.get(username = request.user.username)
         sent_too=request.POST['receiver']
-        sent_to=User.objects.get(user__username = sent_too)
+        sent_to=AbstractUser.objects.get(username = sent_too)
         talk=request.POST['talk']
         conversation=Message.objects.create(sent_from=sent_from,sent_to=sent_to,msg=talk)
-        conversation1=Message.objects.filter(sent_from__username=sender,sent_to__user__username=sent_too)
-        conversation2=Message.objects.filter(sent_to__user__username=sender,sent_from__username=sent_too)
+        conversation1=Message.objects.filter(sent_from__username=sender,sent_to__username=sent_too)
+        conversation2=Message.objects.filter(sent_to__username=sender,sent_from__username=sent_too)
         conversation=list(chain(conversation1,conversation2))
         conversation.sort(key=lambda conversation: conversation.date, reverse=False)
         return render(request,'chatroom.html',locals())

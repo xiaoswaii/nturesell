@@ -29,6 +29,6 @@ class Product(models.Model):
 
 class Message(models.Model):
     sent_from = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete = models.CASCADE, related_name = "sent_from")
-    sent_to = models.ForeignKey(User, on_delete = models.CASCADE , related_name = "sent_to")
+    sent_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE , related_name = "sent_to")
     msg = models.CharField(max_length = 100, blank = False)
     date = models.DateTimeField(auto_now_add = True)

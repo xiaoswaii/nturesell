@@ -31,6 +31,9 @@
                         <hr>
                     </div>
                     <div class="panel-body">
+                        {%if message%}
+                        <span>{{message}}</span>
+                        {%endif%}
                         <div class="row">
                             <div class="col-lg-12">
                                 <form id="login-form" action="/login/" method="POST" role="form" style="display: block;">
@@ -86,9 +89,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {% if message %}
-                                        <div><h1>{{message}}</h1>></div>
-                                    {% endif %}
                                 </form>
                             </div>
                         </div>

@@ -10,7 +10,11 @@ from itertools import chain
 
 @login_required
 def home(request):
-    products = Product.objects.all()
+    if 'searchproduct' in request.POST:
+        productname=request.POST["productname"]
+        products=Product.objects.filter(productname__icontains=productname)
+    else:
+        products = Product.objects.all()
     return render(request, 'home.html', locals())
 
 def register(request):
@@ -28,13 +32,14 @@ def register(request):
 
             if user is not None:
                 message = "Username used by another"
+                return render(request ,"login.html",locals())
             else:
                 user = AbstractUser.objects.create_user(username = username, password = password)
                 userinfo  = User.objects.create(user = user , nickname = nickname, ntumail = ntumail)
                 userinfo.save()
         else:
             message= "confirm password is different from password"
-
+            return render(request ,"login.html",locals())
     return render(request ,"login.html",locals())
 
 
@@ -47,7 +52,8 @@ def authenticate(request):
             auth.login(request, user)
             return redirect('home')
         else:
-            return redirect('home')
+            message="Username or password wrong"
+            return render(request,"login.html",locals())
 
     return render(request,"home.html",locals())
 
@@ -74,10 +80,6 @@ def profile(request):
 @login_required
 def sell(request):
     if request.method == "POST":
-        productname = request.POST["productname"]
-        price = request.POST["price"]
-        amount = request.POST["amount"]
-        information = request.POST["information"]
         form = UploadProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()

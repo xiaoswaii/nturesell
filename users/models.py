@@ -13,7 +13,7 @@ class User(models.Model):
 
 class Wallet(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "user" )
-    amount = models.IntegerField(blank = False)
+    amount = models.IntegerField(blank = False )
     date = models.DateTimeField(auto_now_add = True)
 
 

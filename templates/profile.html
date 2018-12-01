@@ -25,9 +25,17 @@
 {% block mainbody %}
 <div id="namecard">
     {% if profile.profile %}
+    <form method="POST" id="changeprofilepic" action="." enctype="multipart/form-data">
         <img src= "{{profile.profile}}" alt="/static/images/default.jpg">
-    {% else %}    
+        <input type="file" class="form-control-file" name ="profile" id="profile" onchange="up()" value="" style="display:none;" required>
+        <input type="submit" name="submit" id="submit" style="display: none;">
+    </form>
+    {% else %}
+    <form method="POST" id="changeprofilepic" action="." enctype="multipart/form-data">
         <img src= "/static/images/default.png" alt="/static/images/default.jpg">
+        <input type="file" class="form-control-file" name = "profile" onchange="up()" id="profile" value="" style="display:none;" required>
+        <input type="submit" name="submit" id="submit" style="display: none;">
+    </form>
     {% endif %}
     <div id= "right">
         帳號：{{profile.user}} <br> 暱稱：{{profile.nickname}} <br> 電子郵件：{{profile.ntumail}}
@@ -38,4 +46,14 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    $("img").click(function(){
+        $("#profile").click();
+            
+    });
+
+    function up(){
+        $("#submit").click();
+    }
+</script>
 {% endblock %}

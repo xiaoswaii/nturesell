@@ -73,6 +73,8 @@ def login(request):
 
 @login_required
 def profile(request):
+    if request.method == "POST":
+        print(request.FILES)
     if 'searchproduct' in request.POST:
         productname=request.POST["productname"]
         products1=Product.objects.filter(productname__icontains=productname,seller__username=request.user.username)
@@ -90,6 +92,7 @@ def profile(request):
 @login_required
 def sell(request):
     if request.method == "POST":
+        print(request.FILES)
         form = UploadProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()

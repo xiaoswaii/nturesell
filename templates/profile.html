@@ -31,7 +31,11 @@
     {% endif %}
     <div id= "right">
         帳號：{{profile.user}} <br> 暱稱：{{profile.nickname}} <br> 電子郵件：{{profile.ntumail}}
-        <br>
+    <br>
+        <form method="POST" action=".">
+            <input type="hidden" value="whatisell" name="whatisell">
+            <button class="btn btn-lg btn-success" type="submit">What I Sell</button>
+        </form>
     </div>
 </div>
 {% endblock %}

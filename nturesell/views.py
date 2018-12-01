@@ -73,8 +73,16 @@ def login(request):
 
 @login_required
 def profile(request):
+    if 'searchproduct' in request.POST:
+        productname=request.POST["productname"]
+        products1=Product.objects.filter(productname__icontains=productname,seller__username=request.user.username)
+        products2=Product.objects.filter(information__icontains=productname,seller__username=request.user.username)
+        products=(list(set(chain(products1,products2))))
+        return render(request,'selldisplay.html',locals())
+    if 'whatisell' in request.POST:
+        products=Product.objects.filter(seller__username=request.user.username)
+        return render(request,'selldisplay.html',locals())
     if request.user.is_authenticated:
-        print(request.user.username, "hihi")
         profile=User.objects.get(user__username__contains = request.user.username)
         return render(request,'profile.html',locals())
     return render(request,'profile.html',locals())

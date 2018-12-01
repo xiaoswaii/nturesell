@@ -68,19 +68,19 @@
                                 <form id="register-form" action="/login/" method="POST" role="form" style="display: none;">
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="User Name" value="">
+                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="User Name" value="" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" name="nickname" id="nickname" tabindex="1" class="form-control" placeholder="Nick Name" value="">
+                                        <input type="text" name="nickname" id="nickname" tabindex="1" class="form-control" placeholder="Nick Name" value="" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" name="ntumail" id="email" tabindex="1" class="form-control" placeholder="NTU Mail" value="">
+                                        <input type="email" name="ntumail" id="email" tabindex="1" class="form-control" placeholder="NTU Mail" value="" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                        <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
                                     </div>
                                     <div class="form-group">
                                         <div class="row">

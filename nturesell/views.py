@@ -140,3 +140,7 @@ def chat(request):
         return render(request,'chatroom.html',locals())
     return render(request,'chat.html',locals())
 
+@login_required
+def productdetail(request):
+    return render(request,'productdetail.html',locals())
+

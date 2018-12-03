@@ -33,6 +33,7 @@
     {% else %}
     <form method="POST" id="changeprofilepic" action="." enctype="multipart/form-data">
         <img src= "/static/images/default.png" alt="/static/images/default.jpg">
+        <input type="hidden" name="user" id='user' value="{{user.pk}}">
         <input type="file" class="form-control-file" name = "profile" onchange="up()" id="profile" value="" style="display:none;" required>
         <input type="submit" name="submit" id="submit" style="display: none;">
     </form>

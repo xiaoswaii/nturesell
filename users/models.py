@@ -6,13 +6,23 @@ from datetime import datetime, timedelta
 
 # Create your models here.
 class User(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE , related_name = "account")
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE , related_name = "account" , unique = True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
     nickname = models.CharField(max_length = 20)
     ntumail = models.CharField(max_length = 20 , blank = False)
     profile = models.ImageField(upload_to = 'profiles', blank=True)
 
 class Wallet(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "user" )
+    #user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "user"  , unique = True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
     amount = models.IntegerField(blank = False )
     date = models.DateTimeField(auto_now_add = True)
 

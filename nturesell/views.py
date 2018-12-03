@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User as AbstractUser
 from users.models import User, Product, Message
-from users.form import  UploadProductForm
+from users.form import  UploadProductForm, UploadProfileForm
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 
@@ -73,8 +73,13 @@ def login(request):
 
 @login_required
 def profile(request):
-    if request.method == "POST":
-        print(request.FILES)
+    if 'submit' in request.POST:
+        form = UploadProfileForm(request.POST, request.FILES)
+        print(form)
+        if form.is_valid():
+            form.save() 
+            print('upload success!')
+
     if 'searchproduct' in request.POST:
         productname=request.POST["productname"]
         products1=Product.objects.filter(productname__icontains=productname,seller__username=request.user.username)
@@ -82,10 +87,10 @@ def profile(request):
         products=(list(set(chain(products1,products2))))
         return render(request,'selldisplay.html',locals())
     if 'whatisell' in request.POST:
-        products=Product.objects.filter(seller__username=request.user.username)
+        products= Product.objects.filter(seller__username=request.user.username)
         return render(request,'selldisplay.html',locals())
     if request.user.is_authenticated:
-        profile=User.objects.get(user__username__contains = request.user.username)
+        profile = User.objects.filter(user_id = request.user.pk)
         return render(request,'profile.html',locals())
     return render(request,'profile.html',locals())
 

@@ -74,19 +74,22 @@ def login(request):
 @login_required
 def profile(request):
     if 'submit' in request.POST:
-        form = UploadProfileForm(request.POST, request.FILES)
+        print(request.POST)
+        instance = User.objects.get(user = request.POST['user'])
+        print(instance)
+        form = UploadProfileForm(request.POST or None, instance=instance)
         print(form)
         if form.is_valid():
             form.save() 
             print('upload success!')
 
-    if 'searchproduct' in request.POST:
+    elif 'searchproduct' in request.POST:
         productname=request.POST["productname"]
         products1=Product.objects.filter(productname__icontains=productname,seller__username=request.user.username)
         products2=Product.objects.filter(information__icontains=productname,seller__username=request.user.username)
         products=(list(set(chain(products1,products2))))
         return render(request,'selldisplay.html',locals())
-    if 'whatisell' in request.POST:
+    elif 'whatisell' in request.POST:
         products= Product.objects.filter(seller__username=request.user.username)
         return render(request,'selldisplay.html',locals())
     if request.user.is_authenticated:

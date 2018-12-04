@@ -90,7 +90,7 @@ def profile(request):
         products= Product.objects.filter(seller__username=request.user.username)
         return render(request,'selldisplay.html',locals())
     if request.user.is_authenticated:
-        profile = User.objects.filter(user_id = request.user.pk)
+        profile = User.objects.get(user_id = request.user.pk)
         return render(request,'profile.html',locals())
     return render(request,'profile.html',locals())
 

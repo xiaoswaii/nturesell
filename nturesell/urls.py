@@ -31,6 +31,7 @@ urlpatterns = [
     path('login/', views.login),
     path('profile/',views.profile),
     path('chat/',views.chat),
+    path('productdetail',views.productdetail),
 ]
 
 urlpatterns += staticfiles_urlpatterns() 

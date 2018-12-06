@@ -1,6 +1,6 @@
 from django import forms
-from users.models import Product,User
-#from django.contrib.auth.models import User
+from users.models import Product,UserProfile
+from django.contrib.auth.models import User
 
 class UploadProductForm(forms.ModelForm):
     class Meta:
@@ -9,5 +9,5 @@ class UploadProductForm(forms.ModelForm):
 
 class UploadProfileForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = UserProfile
         fields = ('user','profile')

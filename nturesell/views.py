@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User as AbstractUser
-from users.models import User, Product, Message
+from users.models import User, Product, Message, UserProfile
 from users.form import  UploadProductForm, UploadProfileForm
 from django.contrib.auth.decorators import login_required
 from itertools import chain
@@ -74,14 +74,12 @@ def login(request):
 @login_required
 def profile(request):
     if 'submit' in request.POST:
-        print(request.POST)
-        instance = User.objects.get(user = request.POST['user'])
-        print(instance)
-        form = UploadProfileForm(request.POST or None, instance=instance)
-        print(form)
+        if (UserProfile.objects.filter(user_id = request.user.pk).exists()):
+            oldavatar = UserProfile.objects.filter(user_id = request.user.pk) 
+            oldavatar.delete()
+        form = UploadProfileForm(request.POST , request.FILES)
         if form.is_valid():
             form.save() 
-            print('upload success!')
 
     elif 'searchproduct' in request.POST:
         productname=request.POST["productname"]
@@ -93,14 +91,15 @@ def profile(request):
         products= Product.objects.filter(seller__username=request.user.username)
         return render(request,'selldisplay.html',locals())
     if request.user.is_authenticated:
-        profile = User.objects.filter(user_id = request.user.pk)
+        profile = User.objects.get(user_id = request.user.pk)
+        if UserProfile.objects.filter(user_id = request.user.pk).exists():
+            avatar = UserProfile.objects.get()
         return render(request,'profile.html',locals())
     return render(request,'profile.html',locals())
 
 @login_required
 def sell(request):
     if request.method == "POST":
-        print(request.FILES)
         form = UploadProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
@@ -133,13 +132,29 @@ def chat(request):
         sender=request.user.username
         sent_from=AbstractUser.objects.get(username = request.user.username)
         sent_too=request.POST['receiver']
+        receiver=sent_too
         sent_to=AbstractUser.objects.get(username = sent_too)
         talk=request.POST['talk']
-        conversation=Message.objects.create(sent_from=sent_from,sent_to=sent_to,msg=talk)
-        conversation1=Message.objects.filter(sent_from__username=sender,sent_to__username=sent_too)
-        conversation2=Message.objects.filter(sent_to__username=sender,sent_from__username=sent_too)
-        conversation=list(chain(conversation1,conversation2))
-        conversation.sort(key=lambda conversation: conversation.date, reverse=False)
-        return render(request,'chatroom.html',locals())
+        if talk:
+            conversation=Message.objects.create(sent_from=sent_from,sent_to=sent_to,msg=talk)
+            conversation1=Message.objects.filter(sent_from__username=sender,sent_to__username=sent_too)
+            conversation2=Message.objects.filter(sent_to__username=sender,sent_from__username=sent_too)
+            conversation=list(chain(conversation1,conversation2))
+            conversation.sort(key=lambda conversation: conversation.date, reverse=False)
+            return render(request,'chatroom.html',locals())
+        else:
+            conversation1=Message.objects.filter(sent_from__username=sender,sent_to__username=receiver)
+            conversation2=Message.objects.filter(sent_to__username=sender,sent_from__username=receiver)
+            conversation=list(chain(conversation1,conversation2))
+            conversation.sort(key=lambda conversation: conversation.date, reverse=False)
+            return render(request,'chatroom.html',locals())
     return render(request,'chat.html',locals())
+
+@login_required
+def productdetail(request):
+    if request.method == "POST":
+        productname=request.POST["productname"]
+        products=Product.objects.get(productname=productname)
+        return render(request , 'productdetail.html' , locals())
+    return render(request,'productdetail.html',locals())
 

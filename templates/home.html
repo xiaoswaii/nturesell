@@ -50,15 +50,18 @@
         {% for product in products %}
             <div class="col-lg-4 col-sm-6 portfolio-item">
                 <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="/media/{{product.profile}}"></a>
+                    <img class="card-img-top" src="/media/{{product.profile}}">
                     <div class="card-body">
                         <h4 class="card-title">
-                            <a href="#">{{product.productname}}</a>
+                            <a href="">{{product.productname}}</a>
                         </h4>
                         <p class="card-text">Amount:{{product.amount}}</p>
                         <p class="card-text">NTD:{{product.price}}</p>
                     </div>
-                    <input type="submit" value="Details" id="details"></input>
+                    <form action="/productdetail" method="POST">
+                        <input type="hidden" value="{{product.productname}}" name="productname">
+                        <input type="submit" value="Details" id="details"></input>
+                    </form>
                 </div>
             </div>
         {% endfor %}

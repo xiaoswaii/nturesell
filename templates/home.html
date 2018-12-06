@@ -49,26 +49,27 @@
     <div class="row">
         {% for product in products %}
             <div class="col-lg-4 col-sm-6 portfolio-item">
+                <!-- <button type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </button> -->
                 <div class="card h-100">
                     <img class="card-img-top" src="/media/{{product.profile}}">
                     <div class="card-body">
                         <h4 class="card-title">
                             <a href="">{{product.productname}}</a>
                         </h4>
-                        <p class="card-text">Amount:{{product.amount}}</p>
-                        <p class="card-text">NTD:{{product.price}}</p>
+                        <p class="card-text">Amount:<br>{{product.amount}}</p>
+                        <p class="card-text">NTD:<br>{{product.price}}</p>
                     </div>
                     <form action="/productdetail" method="POST">
                         <input type="hidden" value="{{product.pk}}" name="product">
-                        <input type="submit" value="Details" id="details"></input>
+                        <input type="submit" value="Details" id="details">
                     </form>
                 </div>
             </div>
         {% endfor %}
     </div>
     <!-- /.row -->
-
-    
 
 </div>
 <!-- /.container -->

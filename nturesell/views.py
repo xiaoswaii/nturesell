@@ -153,8 +153,8 @@ def chat(request):
 @login_required
 def productdetail(request):
     if request.method == "POST":
-        productname=request.POST["productname"]
-        products=Product.objects.get(productname=productname)
+        product=request.POST["product"]
+        products=Product.objects.get(id=product)
         return render(request , 'productdetail.html' , locals())
     return render(request,'productdetail.html',locals())
 

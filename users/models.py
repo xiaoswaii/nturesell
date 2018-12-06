@@ -52,6 +52,7 @@ class Message(models.Model):
     msg = models.CharField(max_length = 100, blank = False)
     date = models.DateTimeField(auto_now_add = True)
 
+## delete the file when the object have been deleted
 @receiver(models.signals.post_delete, sender = Product)
 @receiver(models.signals.post_delete, sender = UserProfile)
 def auto_delete_file_on_delete(sender, instance, **kwargs):

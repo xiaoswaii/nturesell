@@ -68,7 +68,6 @@ def login(request):
                 return register(request)
         except:
             message = "account or password is wrong!!"
-            print(message)
     return render(request,"login.html",locals())
 
 @login_required
@@ -87,6 +86,7 @@ def profile(request):
         products2=Product.objects.filter(information__icontains=productname,seller__username=request.user.username)
         products=(list(set(chain(products1,products2))))
         return render(request,'selldisplay.html',locals())
+
     elif 'whatisell' in request.POST:
         products= Product.objects.filter(seller__username=request.user.username)
         return render(request,'selldisplay.html',locals())

@@ -28,7 +28,7 @@ h1{
 	transition: all 0.1s linear;
 }
 .panel-login>.panel-heading a.active{
-	color: #029f5b;
+	color: #5599FF;
 	font-size: 18px;
 }
 .panel-login>.panel-heading hr{
@@ -58,6 +58,7 @@ h1{
 	box-shadow: none;
 	border-color: #ccc;
 }
+
 .btn-login {
 	background-color: #59B2E0;
 	outline: none;
@@ -86,7 +87,7 @@ h1{
 }
 
 .btn-register {
-	background-color: #1CB94E;
+	background-color: #5599FF;
 	outline: none;
 	color: #fff;
 	font-size: 14px;
@@ -94,12 +95,12 @@ h1{
 	font-weight: normal;
 	padding: 14px 0;
 	text-transform: uppercase;
-	border-color: #1CB94A;
+	border-color: #5599FF;
 }
 .btn-register:hover,
 .btn-register:focus {
 	color: #fff;
-	background-color: #1CA347;
-	border-color: #1CA347;
+	background-color: #5599FF;
+	border-color: #5599FF;
 }
 

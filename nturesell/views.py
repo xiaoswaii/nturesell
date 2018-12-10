@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User as AbstractUser
-from users.models import User, Product, Message, UserProfile
+from users.models import User, Product, Message, Comment, UserProfile
 from users.form import  UploadProductForm, UploadProfileForm
 from django.contrib.auth.decorators import login_required
 from itertools import chain
@@ -148,13 +148,23 @@ def chat(request):
             conversation=list(chain(conversation1,conversation2))
             conversation.sort(key=lambda conversation: conversation.date, reverse=False)
             return render(request,'chatroom.html',locals())
+    searchuserresult=User.objects.all()
     return render(request,'chat.html',locals())
 
 @login_required
 def productdetail(request):
+    if 'commenting' in request.POST:
+        commenter=AbstractUser.objects.get(username = request.user.username)
+        comment=request.POST['comment']
+        productpk=request.POST['productpk']
+        Comment.objects.create(commenter=commenter,productpk=productpk,comment=comment)
+        products=Product.objects.get(id=productpk)
+        comment=Comment.objects.filter(productpk=productpk)
+        return render(request , 'productdetail.html' , locals())
     if request.method == "POST":
-        product=request.POST["product"]
-        products=Product.objects.get(id=product)
+        productpk=request.POST["productpk"]
+        products=Product.objects.get(id=productpk)
+        comment=Comment.objects.filter(productpk=productpk)
         return render(request , 'productdetail.html' , locals())
     return render(request,'productdetail.html',locals())
 

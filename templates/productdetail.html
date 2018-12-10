@@ -1,8 +1,5 @@
-{% extends "base.html" %} {% load static %} 
-{% block stylesheet %} 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
-{% endblock %} 
-{% block nevitem %}
+{% extends "base.html" %} {% load static %} {% block stylesheet %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"> {% endblock %} {% block nevitem %}
 <li class="nav-item active">
     <a class="nav-link" href="/home">Home
         <span class="sr-only"></span>
@@ -21,57 +18,58 @@
     <a class="nav-link" href="/logout">Log out</a>
 </li>
 {% endblock %} {% block mainbody %}
-    <!-- Navigation -->
-    <!-- Page Content -->
-    <div class="container">
-        <!-- /.col-lg-3 -->
-        {% if products %}
-        <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="/media/{{products.profile}}" alt="">
-            <div class="card-body">
+<!-- Navigation -->
+<!-- Page Content -->
+<div class="container">
+    <!-- /.col-lg-3 -->
+    {% if products %}
+    <div class="card mt-4">
+        <img class="card-img-top img-fluid" src="/media/{{products.profile}}" alt="">
+        <div class="card-body">
             <h3 class="card-title">{{products.productname}}</h3>
             <h4>NTD{{products.price}}</h4>
             <p class="card-text">{{products.information}}</p>
             <!-- &#9733; bright star &#9734; dark star -->
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            4.5 stars
-        {%endif%}
+            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span> 4.5 stars {%endif%}
         </div>
-        </div>
-        <!-- /.card -->
+    </div>
+    <!-- /.card -->
 
-        <div class="card card-outline-secondary my-4">
-            <div class="card-header">
-                Product Reviews
-            </div>
-            <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-            <hr>
+    <div class="card card-outline-secondary my-4">
+        <div class="card-header">
+            Product Reviews
+        </div>
+        <div class="card-body">
+            {% if comment%} {% for a in comment %}
+            <p>{{a.comment}}</p>
+            <small class="text-muted">Posted by {{a.commenter.username}} on {{a.date}}</small>
+            <hr> {% endfor %}{% endif %}
             <div class="form-group">
-            <form>
-                <label for="comment">Comment:</label>
-                <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
-                <a href="#" class="btn btn-success">Comment</a>
-            </form>
-        </div>
-            
+                <form action="/productdetail" method="POST">
+                    <label for="comment">Comment:</label>
+                    <textarea type="text" class="form-control" rows="5" id="comment" name="comment"></textarea>
+                    <input type="hidden" name="productpk" value="{{products.pk}}">
+                    <input type="hidden" name="commenting" value="commenting">
+                    <button type="submit" class="btn btn-success">Comment</button>
+                </form>
             </div>
 
         </div>
-        <!-- /.card -->
 
     </div>
-    <!-- /.container -->
+    <!-- /.card -->
 
-    <!-- Footer -->
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
 <footer class="py-5 bg-dark">
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; NTURESELL 2018</p>
     </div>
 </footer>
 
-    <!-- Bootstrap core JavaScript -->
+<!-- Bootstrap core JavaScript -->
 <script src="{% static 'vendor/jquery/jquery.min.js' %} "></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 {% endblock %}

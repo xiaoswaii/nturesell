@@ -46,6 +46,12 @@ class Product(models.Model):
     profile = models.FileField(upload_to = 'products', blank = False)
     information = models.CharField(max_length = 200, blank = True)
 
+class Comment(models.Model):
+    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE, related_name = "commenter")
+    productpk = models.IntegerField(blank=False)
+    comment = models.CharField(max_length = 100, blank = False)
+    date = models.DateTimeField(auto_now_add = True)
+
 class Message(models.Model):
     sent_from = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete = models.CASCADE, related_name = "sent_from")
     sent_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE , related_name = "sent_to")

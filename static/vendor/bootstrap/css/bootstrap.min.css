@@ -1911,7 +1911,7 @@ pre code {
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
-    background-color: #fff;
+    /*background-color: #fff;*/
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: .25rem;
@@ -2495,6 +2495,25 @@ select.form-control-lg:not([size]):not([multiple]) {
 a.btn.disabled,
 fieldset:disabled a.btn {
     pointer-events: none
+}
+
+.btn-login {
+    background-color: #59B2E0;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    height: auto;
+    font-weight: normal;
+    padding: 14px 0;
+    text-transform: uppercase;
+    border-color: #59B2E6;
+}
+
+.btn-login:hover,
+.btn-login:focus {
+    color: #fff;
+    background-color: #53A3CD;
+    border-color: #53A3CD;
 }
 
 .btn-primary {

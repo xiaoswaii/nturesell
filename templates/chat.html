@@ -34,17 +34,14 @@
         <!--end of col-->
     </div>
 </form>
-{% if searchuserresult %}
-{% for a in searchuserresult %} 
+{% if searchuserresult %} {% for a in searchuserresult %} {% ifnotequal a.user.username request.user.username%}
 <ul class="list-group">
-  <li class="list-group-item">{{a.user}}
-    <form method="POST" action=".">
-        <input type="hidden" value="{{a.user}}" name="receiver">
-        <input type="hidden" value="talkto" name="talkto">
+    <li class="list-group-item">{{a.user}}
+        <form method="POST" action=".">
+            <input type="hidden" value="{{a.user}}" name="receiver">
+            <input type="hidden" value="talkto" name="talkto">
             <button class="btn btn-lg btn-success" type="submit">Chat</button>
-    </form>
-  </li>
+        </form>
+    </li>
 </ul>
-{% endfor %} 
-{% endif %} 
-{% endblock %}
+{% endifnotequal %} {% endfor %}{% endif %} {% endblock %}

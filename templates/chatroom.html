@@ -1,7 +1,8 @@
 {% extends "base.html" %} {% load static %} {% block stylesheet %} 
 <link href="{% static 'css/chatroom.css' %}" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
-{% endblock %} {% block nevitem %}
+{% endblock %} 
+{% block nevitem %}
 <li class="nav-item">
     <a class="nav-link" href="/home">Home
         <span class="sr-only"></span>
@@ -21,7 +22,7 @@
 </li>
 {% endblock %} 
 {% block mainbody %}
- <div class="container">
+<div class="container">
 <h3 class=" text-center">Messaging</h3>
 <div class="messaging">
         <div class="mesgs">
@@ -38,7 +39,8 @@
               <div class="received_msg">
                 <div class="received_withd_msg">
                   <p>{{msg.msg}}</p>
-                  <span class="time_date">{{msg.date}}</span></div>
+                  <span class="time_date">{{msg.date}}</span>
+                </div>
               </div>
             </div>
             {%endifequal%}{%endfor%}

@@ -74,11 +74,11 @@ def login(request):
 def profile(request):
     if 'submit' in request.POST:
         if (UserProfile.objects.filter(user_id = request.user.pk).exists()):
-            oldavatar = UserProfile.objects.filter(user_id = request.user.pk) 
+            oldavatar = UserProfile.objects.filter(user_id = request.user.pk)
             oldavatar.delete()
         form = UploadProfileForm(request.POST , request.FILES)
         if form.is_valid():
-            form.save() 
+            form.save()
 
     elif 'searchproduct' in request.POST:
         productname=request.POST["productname"]

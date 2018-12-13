@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% load static %} {% block stylesheet %}
+{% extends "base.html" %}
+{% load static %} 
+{% block stylesheet %}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"> {% endblock %} {% block nevitem %}
 <li class="nav-item active">
     <a class="nav-link" href="/home">Home
@@ -17,7 +19,8 @@
 <li class="nav-item">
     <a class="nav-link" href="/logout">Log out</a>
 </li>
-{% endblock %} {% block mainbody %}
+{% endblock %}
+{% block mainbody %}
 <!-- Navigation -->
 <!-- Page Content -->
 <div class="container">
@@ -40,10 +43,13 @@
             Product Reviews
         </div>
         <div class="card-body">
-            {% if comment%} {% for a in comment %}
-            <p>{{a.comment}}</p>
-            <small class="text-muted">Posted by {{a.commenter.username}} on {{a.date}}</small>
-            <hr> {% endfor %}{% endif %}
+            {% if comment%} 
+                {% for a in comment %}
+                <p>{{a.comment}}</p>
+                <small class="text-muted">Posted by {{a.commenter.username}} on {{a.date}}</small>
+                <hr> 
+                {% endfor %}
+            {% endif %}
             <div class="form-group">
                 <form action="/productdetail" method="POST">
                     <label for="comment">Comment:</label>

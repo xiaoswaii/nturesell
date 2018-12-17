@@ -11,10 +11,10 @@ from itertools import chain
 @login_required
 def home(request):
     if 'searchproduct' in request.POST:
-        productname=request.POST["productname"]
-        products1=Product.objects.filter(productname__icontains=productname)
-        products2=Product.objects.filter(information__icontains=productname)
-        products=(list(set(chain(products1,products2))))
+        productname = request.POST["productname"]
+        products1 = Product.objects.filter(productname__icontains=productname)
+        products2 = Product.objects.filter(information__icontains=productname)
+        products = (list(set(chain(products1,products2))))
     else:
         products = Product.objects.all()
     return render(request, 'home.html', locals())
@@ -81,14 +81,14 @@ def profile(request):
             form.save()
 
     elif 'searchproduct' in request.POST:
-        productname=request.POST["productname"]
-        products1=Product.objects.filter(productname__icontains=productname,seller__username=request.user.username)
-        products2=Product.objects.filter(information__icontains=productname,seller__username=request.user.username)
-        products=(list(set(chain(products1,products2))))
+        productname = request.POST["productname"]
+        products1 = Product.objects.filter(productname__icontains=productname,seller__username=request.user.username)
+        products2 = Product.objects.filter(information__icontains=productname,seller__username=request.user.username)
+        products = (list(set(chain(products1,products2))))
         return render(request,'selldisplay.html',locals())
 
     elif 'whatisell' in request.POST:
-        products= Product.objects.filter(seller__username=request.user.username)
+        products = Product.objects.filter(seller__username=request.user.username)
         return render(request,'selldisplay.html',locals())
     if request.user.is_authenticated:
         profile = User.objects.get(user_id = request.user.pk)
@@ -114,57 +114,57 @@ def logout(request):
 @login_required
 def chat(request):
     if 'search' in request.POST:
-        searchname=request.POST["searchname"]
+        searchname = request.POST["searchname"]
         if searchname:
             searchuserresult=User.objects.filter(user__username__contains = searchname)
             return render(request,'chat.html',locals())
         else:
             return render(request,'chat.html',locals())
     if 'talkto' in request.POST:
-        sender=request.user.username
-        receiver=request.POST['receiver']
-        conversation1=Message.objects.filter(sent_from__username=sender,sent_to__username=receiver)
-        conversation2=Message.objects.filter(sent_to__username=sender,sent_from__username=receiver)
-        conversation=list(chain(conversation1,conversation2))
-        conversation.sort(key=lambda conversation  : conversation.date, reverse=False)
+        sender = request.user.username
+        receiver = request.POST['receiver']
+        conversation1 = Message.objects.filter(sent_from__username=sender,sent_to__username=receiver)
+        conversation2 = Message.objects.filter(sent_to__username=sender,sent_from__username=receiver)
+        conversation = list(chain(conversation1,conversation2))
+        conversation.sort(key=lambda x: x.date)
         return render(request,'chatroom.html',locals())
     if 'talking' in request.POST:
-        sender=request.user.username
-        sent_from=AbstractUser.objects.get(username = request.user.username)
-        sent_too=request.POST['receiver']
-        receiver=sent_too
-        sent_to=AbstractUser.objects.get(username = sent_too)
-        talk=request.POST['talk']
+        sender = request.user.username
+        sent_from = AbstractUser.objects.get(username = request.user.username)
+        sent_too = request.POST['receiver']
+        receiver = sent_too
+        sent_to = AbstractUser.objects.get(username = sent_too)
+        talk = request.POST['talk']
         if talk:
-            conversation=Message.objects.create(sent_from=sent_from,sent_to=sent_to,msg=talk)
-            conversation1=Message.objects.filter(sent_from__username=sender,sent_to__username=sent_too)
-            conversation2=Message.objects.filter(sent_to__username=sender,sent_from__username=sent_too)
-            conversation=list(chain(conversation1,conversation2))
-            conversation.sort(key=lambda conversation: conversation.date, reverse=False)
+            Message.objects.create(sent_from=sent_from,sent_to=sent_to,msg=talk)
+            conversation1 = Message.objects.filter(sent_from__username=sender,sent_to__username=sent_too)
+            conversation2 = Message.objects.filter(sent_to__username=sender,sent_from__username=sent_too)
+            conversation = list(chain(conversation1,conversation2))
+            conversation.sort(key= lambda x: x.date)
             return render(request,'chatroom.html',locals())
         else:
-            conversation1=Message.objects.filter(sent_from__username=sender,sent_to__username=receiver)
-            conversation2=Message.objects.filter(sent_to__username=sender,sent_from__username=receiver)
-            conversation=list(chain(conversation1,conversation2))
-            conversation.sort(key=lambda conversation: conversation.date, reverse=False)
+            conversation1 = Message.objects.filter(sent_from__username=sender,sent_to__username=receiver)
+            conversation2 = Message.objects.filter(sent_to__username=sender,sent_from__username=receiver)
+            conversation = list(chain(conversation1,conversation2))
+            conversation.sort(key= lambda x: x.date)
             return render(request,'chatroom.html',locals())
-    searchuserresult=User.objects.all()
+    searchuserresult = User.objects.all()
     return render(request,'chat.html',locals())
 
 @login_required
 def productdetail(request):
     if 'commenting' in request.POST:
-        commenter=AbstractUser.objects.get(username = request.user.username)
-        comment=request.POST['comment']
-        productpk=request.POST['productpk']
+        commenter = AbstractUser.objects.get(username = request.user.username)
+        comment = request.POST['comment']
+        productpk = request.POST['productpk']
         Comment.objects.create(commenter=commenter,productpk=productpk,comment=comment)
-        products=Product.objects.get(id=productpk)
-        comment=Comment.objects.filter(productpk=productpk)
+        products = Product.objects.get(id=productpk)
+        comment = Comment.objects.filter(productpk=productpk)
         return render(request , 'productdetail.html' , locals())
     if request.method == "POST":
-        productpk=request.POST["productpk"]
-        products=Product.objects.get(id=productpk)
-        comment=Comment.objects.filter(productpk=productpk)
+        productpk = request.POST["productpk"]
+        products = Product.objects.get(id=productpk)
+        comment = Comment.objects.filter(productpk=productpk)
         return render(request , 'productdetail.html' , locals())
     return render(request,'productdetail.html',locals())
 

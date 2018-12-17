@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
+    'channels',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +79,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'nturesell.wsgi.application'
-
+# docker run -p 6379:6379 -d redis:2.8
+ASGI_APPLICATION = "nturesell.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

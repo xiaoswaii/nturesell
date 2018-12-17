@@ -5,7 +5,6 @@ body {
 h1{
     text-align:center;
 }
-
 .panel-login {
 	border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
@@ -85,9 +84,8 @@ h1{
 	text-decoration: underline;
 	color: #666;
 }
-
 .btn-register {
-	background-color: #5599FF;
+	background-color: #53A3CD;
 	outline: none;
 	color: #fff;
 	font-size: 14px;
@@ -95,7 +93,7 @@ h1{
 	font-weight: normal;
 	padding: 14px 0;
 	text-transform: uppercase;
-	border-color: #5599FF;
+	border-color: #53A3CD;
 }
 .btn-register:hover,
 .btn-register:focus {

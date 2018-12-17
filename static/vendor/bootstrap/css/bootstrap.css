@@ -459,7 +459,7 @@ mark,
 
 .initialism {
   font-size: 90%;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .blockquote {
@@ -2363,14 +2363,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #59B2E6;
+  border-color: #59B2E6;
 }
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #53A3CD;
+  border-color: #53A3CD;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2931,7 +2931,7 @@ fieldset:disabled a.btn {
 
 .btn-lg, .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
+  font-size: 1.0 rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }

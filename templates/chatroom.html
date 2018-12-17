@@ -1,5 +1,7 @@
-{% extends "base.html" %} {% load static %} {% block stylesheet %} 
+{% extends "base.html" %} {% load static %} 
+{% block stylesheet %}
 <link href="{% static 'css/chatroom.css' %}" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
 {% endblock %} 
 {% block nevitem %}
@@ -60,5 +62,15 @@
       
       
     </div></div>
+<script type="text/javascript">
+$(document).ready(function() {
+  setInterval(function() {
+    cache_clear()
+  }, 6000);
+});
 
+function cache_clear() {
+  window.location.reload(true);
+}
+</script>
 {% endblock %}

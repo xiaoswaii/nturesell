@@ -127,6 +127,8 @@ def chat(request):
         conversation2 = Message.objects.filter(sent_to__username=sender,sent_from__username=receiver)
         conversation = list(chain(conversation1,conversation2))
         conversation.sort(key=lambda x: x.date)
+        if UserProfile.objects.filter(user_id = request.user.pk).exists():
+            avatar = UserProfile.objects.get()
         return render(request,'chatroom.html',locals())
     if 'talking' in request.POST:
         sender = request.user.username

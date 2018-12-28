@@ -75,11 +75,13 @@ def room(request, room_name):
                 sent_to__username=sender, sent_from__username=receiver)
             conversation = list(chain(conversation1, conversation2))
             conversation.sort(key=lambda x: x.date)
-
+    avatar = ""
+    receive = ""
     if UserProfile.objects.filter(user_id=request.user.pk).exists():
             avatar = UserProfile.objects.get(user_id=request.user.pk)
     if UserProfile.objects.filter(user__username=receiver).exists():
             receive = UserProfile.objects.get(user__username=receiver)
+
     return render(request, 'chat/chatroom.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
         'conversation': conversation,

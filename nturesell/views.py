@@ -64,7 +64,6 @@ def authenticate(request):
 
     return render(request, "home.html", locals())
 
-
 def login(request):
     if request.method == "POST":
         try:
@@ -132,9 +131,8 @@ def chat(request):
         if searchname:
             searchuserresult = User.objects.filter(
                 user__username__contains=searchname)
-            return render(request, 'chat.html', locals())
-        else:
-            return render(request, 'chat.html', locals())
+        return render(request, 'chat.html', locals())
+
 
     if 'talkto' in request.POST:
         sender = request.user.username
@@ -148,8 +146,9 @@ def chat(request):
         if UserProfile.objects.filter(user_id=request.user.pk).exists():
             avatar = UserProfile.objects.get(user_id=request.user.pk)
 
-        if UserProfile.objects.filter(user_id=request.user.pk).exists():
-            receive = UserProfile.objects.get(user__username=receiver)
+        ## receiver avatar
+        if UserProfile.objects.filter(user__username=receiver).exists():
+            receiver = UserProfile.objects.get(user__username=receiver)
         return render(request, 'chatroom.html', locals())
 
     if 'talking' in request.POST:
@@ -161,7 +160,7 @@ def chat(request):
         talk = request.POST['talk']
         if talk:
             Message.objects.create(sent_from=sent_from,
-                                   sent_to=sent_to, msg=talk)
+                                    sent_to=sent_to, msg=talk)
             conversation1 = Message.objects.filter(
                 sent_from__username=sender, sent_to__username=sent_too)
             conversation2 = Message.objects.filter(
@@ -170,7 +169,7 @@ def chat(request):
             conversation.sort(key=lambda x: x.date)
             if UserProfile.objects.filter(user_id=request.user.pk).exists():
                 avatar = UserProfile.objects.get(user_id=request.user.pk)
-            if UserProfile.objects.filter(user_id=request.user.pk).exists():
+            if UserProfile.objects.filter(user__username=receiver).exists():
                 receive = UserProfile.objects.get(user__username=receiver)
             return render(request, 'chatroom.html', locals())
         else:
@@ -185,6 +184,7 @@ def chat(request):
             if UserProfile.objects.filter(user_id=request.user.pk).exists():
                 receive = UserProfile.objects.get(user__username=receiver)
             return render(request, 'chatroom.html', locals())
+            
     searchuserresult = User.objects.all()
     return render(request, 'chat.html', locals())
 
@@ -196,7 +196,7 @@ def productdetail(request):
         comment = request.POST['comment']
         productpk = request.POST['productpk']
         Comment.objects.create(commenter=commenter,
-                               productpk=productpk, comment=comment)
+                                productpk=productpk, comment=comment)
         products = Product.objects.get(id=productpk)
         comment = Comment.objects.filter(productpk=productpk)
         return render(request, 'productdetail.html', locals())

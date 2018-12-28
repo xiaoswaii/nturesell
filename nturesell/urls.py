@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import include, url
+from chat import views as chatView
 
 
 urlpatterns = [
@@ -30,8 +31,8 @@ urlpatterns = [
     path('home/', views.home, name = "home"),
     path('register/', views.register),
     path('login/', views.login),
-    path('profile/',views.profile),
-    path('chatapp/',views.chat),
+    path('profile/', views.profile),
+    path('chatapp/', views.chat),
     path('productdetail',views.productdetail),
     url(r'^chat/', include('chat.urls')),
 ]

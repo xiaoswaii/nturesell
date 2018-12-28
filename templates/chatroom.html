@@ -29,7 +29,8 @@
                 <div class="outgoing_msg">
                     {% if avatar %}
                     <div class="outgoing_msg_img"> <img src="/media/{{avatar.profile}}" alt="sunil"> </div>
-                    {% endif %}
+                    { % else %}
+                    <span>fuck</span> {% endif %}
                     <div class="sent_msg">
                         <p>{{msg.msg}}</p>
                         <span class="time_date">{{msg.date}}</span> </div>

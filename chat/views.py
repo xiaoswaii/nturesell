@@ -21,6 +21,7 @@ def index(request):
     if 'talkto' in request.POST:
         sender = request.user.username
         receiver = request.POST['receiver']
+        
         conversation1 = Message.objects.filter(
             sent_from__username=sender, sent_to__username=receiver)
         conversation2 = Message.objects.filter(
@@ -42,6 +43,7 @@ def index(request):
             roomName = hashlib.sha256((sender + receiver).encode()).hexdigest()
             ChatRoom.objects.create(
                 user1=request.user, user2=user2, room_name=roomName)
+
         return redirect('/chat/' + roomName + '/', locals())
     searchuserresult = User.objects.all()
     return render(request, 'chat.html', locals())
@@ -55,6 +57,7 @@ def room(request, room_name):
     else:
         sender = request.user
         receiver = chatroom.user1
+
     conversation1 = Message.objects.filter(
         sent_from__username=sender, sent_to__username=receiver)
     conversation2 = Message.objects.filter(

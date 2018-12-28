@@ -32,7 +32,6 @@ urlpatterns = [
     path('register/', views.register),
     path('login/', views.login),
     path('profile/', views.profile),
-    path('chatapp/', views.chat),
     path('productdetail',views.productdetail),
     url(r'^chat/', include('chat.urls')),
 ]

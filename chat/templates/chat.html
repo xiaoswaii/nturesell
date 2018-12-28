@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% load static %} {% block stylesheet %} {% endblock %} {% block nevitem %}
+<li class="nav-item">
+    <a class="nav-link" href="/home">Home
+        <span class="sr-only"></span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/sell">Selling</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/profile">Profile</a>
+</li>
+<li class="nav-item  active">
+    <a class="nav-link" href="/chat">Chat</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/logout">Log Out</a>
+</li>
+{% endblock %} {% block mainbody %}
+<form action="." method="POST" class="card card-sm">
+    <div class="card-body row no-gutters align-items-center">
+        <div class="col-auto">
+            <i class="fas fa-search h4 text-body"></i>
+        </div>
+        <!--end of col-->
+        <div class="col">
+            <input class="form-control form-control-lg form-control-borderless" name="searchname" type="search" placeholder="Search user" value="">
+        </div>
+        <input type="hidden" value="search" name="search">
+        <!--end of col-->
+        <div class="col-auto">
+            <button class="btn btn-lg btn-login" type="submit">Search</button>
+        </div>
+        <!--end of col-->
+    </div>
+</form>
+{% if searchuserresult %} {% for a in searchuserresult %} {% ifnotequal a.user.username request.user.username%}
+<ul class="list-group">
+    <li class="list-group-item">{{a.user}}
+        <form method="POST" action=".">
+            <input type="hidden" value="{{a.user}}" name="receiver">
+            <input type="hidden" value="talkto" name="talkto">
+            <button class="btn btn-sm btn-login" type="submit">Chat</button>
+        </form>
+    </li>
+</ul>
+{% endifnotequal %} {% endfor %}{% endif %} {% endblock %}

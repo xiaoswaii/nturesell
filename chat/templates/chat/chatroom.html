@@ -78,7 +78,7 @@
         var message = data['message'];
         var images = $(avatar).attr("src");
         var d = new Date();
-        var strDate = d.getFullYear() + "/" 
+        var strDate =   d.getFullYear() + "/" 
                         + (d.getMonth() + 1) + "/"
                         + d.getDate() + " "
                         + d.getHours() + ":"
@@ -102,13 +102,7 @@
         console.error('Chat socket closed unexpectedly');
     };
 
-    document.querySelector('#chat-message-input').focus();
-    // document.querySelector('#chat-message-input').onkeyup = function(e) {
-    //     if (e.keyCode === 13) { // enter, return
-    //         document.querySelector('#chat-message-submit').click();
-    //     }
-    // };
-
+    document.querySelector('#chat-message-input').focus(); 
     document.querySelector('#chat-message-submit').onclick = function(e) {
         var messageInputDom = document.querySelector('#chat-message-input');
         var message = messageInputDom.value;

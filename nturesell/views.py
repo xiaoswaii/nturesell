@@ -144,7 +144,9 @@ def chat(request):
         conversation = list(chain(conversation1, conversation2))
         conversation.sort(key=lambda x: x.date)
         if UserProfile.objects.filter(user_id=request.user.pk).exists():
-            avatar = UserProfile.objects.get()
+            avatar = UserProfile.objects.get(user_id=request.user.pk)
+        if UserProfile.objects.filter(user_id=request.user.pk).exists():
+            receive = UserProfile.objects.get(user__username=receiver)
         return render(request, 'chatroom.html', locals())
     if 'talking' in request.POST:
         sender = request.user.username
@@ -162,6 +164,10 @@ def chat(request):
                 sent_to__username=sender, sent_from__username=sent_too)
             conversation = list(chain(conversation1, conversation2))
             conversation.sort(key=lambda x: x.date)
+            if UserProfile.objects.filter(user_id=request.user.pk).exists():
+                avatar = UserProfile.objects.get(user_id=request.user.pk)
+            if UserProfile.objects.filter(user_id=request.user.pk).exists():
+                receive = UserProfile.objects.get(user__username=receiver)
             return render(request, 'chatroom.html', locals())
         else:
             conversation1 = Message.objects.filter(
@@ -170,6 +176,10 @@ def chat(request):
                 sent_to__username=sender, sent_from__username=receiver)
             conversation = list(chain(conversation1, conversation2))
             conversation.sort(key=lambda x: x.date)
+            if UserProfile.objects.filter(user_id=request.user.pk).exists():
+                avatar = UserProfile.objects.get(user_id=request.user.pk)
+            if UserProfile.objects.filter(user_id=request.user.pk).exists():
+                receive = UserProfile.objects.get(user__username=receiver)
             return render(request, 'chatroom.html', locals())
     searchuserresult = User.objects.all()
     return render(request, 'chat.html', locals())

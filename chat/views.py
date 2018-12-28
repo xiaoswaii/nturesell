@@ -5,8 +5,9 @@ from itertools import chain
 from users.models import User, Product, Message, Comment, UserProfile, ChatRoom, Message
 from django.contrib.auth.models import User as AbstractUser
 import hashlib
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def index(request):
     # search the related name
     if 'search' in request.POST:
@@ -30,7 +31,6 @@ def index(request):
             avatar = UserProfile.objects.get(user_id=request.user.pk)
 
         user2 = AbstractUser.objects.get(username=receiver)
-
         # find the chat room
         if ChatRoom.objects.filter(user1__username=sender, user2__username=receiver).exists():
             roomName = ChatRoom.objects.get(
@@ -46,7 +46,7 @@ def index(request):
     searchuserresult = User.objects.all()
     return render(request, 'chat.html', locals())
 
-
+@login_required
 def room(request, room_name):
     chatroom = ChatRoom.objects.get(room_name=room_name)
     if request.user.username == chatroom.user1.username:
@@ -73,7 +73,6 @@ def room(request, room_name):
                 sent_to__username=sender, sent_from__username=receiver)
             conversation = list(chain(conversation1, conversation2))
             conversation.sort(key=lambda x: x.date)
-            
 
     return render(request, 'chat/chatroom.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),

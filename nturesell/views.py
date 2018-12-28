@@ -3,10 +3,11 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User as AbstractUser
-from users.models import User, Product, Message, Comment, UserProfile
+from users.models import User, Product, Message, Comment, UserProfile, ChatRoom
 from users.form import UploadProductForm, UploadProfileForm
 from django.contrib.auth.decorators import login_required
 from itertools import chain
+import hashlib
 
 
 @login_required
@@ -101,8 +102,8 @@ def profile(request):
         return render(request, 'selldisplay.html', locals())
 
     if request.user.is_authenticated:
-        profile = User.objects.get(user_id=request.user.pk)
-        if UserProfile.objects.filter(user_id=request.user.pk).exists():
+        profile = User.objects.get(user__id=request.user.pk)
+        if UserProfile.objects.filter(user__id=request.user.pk).exists():
             avatar = UserProfile.objects.get(
                 user_id=request.user.pk)
         return render(request, 'profile.html', locals())
@@ -134,6 +135,7 @@ def chat(request):
             return render(request, 'chat.html', locals())
         else:
             return render(request, 'chat.html', locals())
+
     if 'talkto' in request.POST:
         sender = request.user.username
         receiver = request.POST['receiver']
@@ -144,8 +146,24 @@ def chat(request):
         conversation = list(chain(conversation1, conversation2))
         conversation.sort(key=lambda x: x.date)
         if UserProfile.objects.filter(user_id=request.user.pk).exists():
-            avatar = UserProfile.objects.get()
-        return render(request, 'chatroom.html', locals())
+            avatar = UserProfile.objects.get(user_id=request.user.pk)
+
+        user2 = AbstractUser.objects.get(username=receiver)
+
+        # find the chat room
+        roomName = ""
+        if ChatRoom.objects.filter(user1__username=sender, user2__username=receiver).exists():
+            roomName = ChatRoom.objects.get(
+                user1__username=sender, user2__username=receiver).room_name
+        elif ChatRoom.objects.filter(user2__username=sender, user1__username=receiver).exists():
+            roomName = ChatRoom.objects.get(
+                user2__username=sender, user1__username=receiver).room_name
+        else:
+            roomName = hashlib.sha256((sender + receiver).encode()).hexdigest()
+            ChatRoom.objects.create(
+                user1=request.user, user2=user2, room_name=roomName)
+
+        return redirect('/chat/' + roomName + '/', locals())
     if 'talking' in request.POST:
         sender = request.user.username
         sent_from = AbstractUser.objects.get(username=request.user.username)

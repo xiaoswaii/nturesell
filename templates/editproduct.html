@@ -35,13 +35,27 @@
                 <input type="submit" value="Delete this item">
             </form>
             {% if products.status == 1%}
-            <form action="editproduct" method="POST" onsubmit="alert('Are you sure?')">
-                <input type="text" name="buyername" value="">
-                <input type="hidden" name="productpk" value="{{products.pk}}">
-                <input type="hidden" name="solditem" value="solditem">
-                <input type="submit" value="sell item">
-            </form>
-            {% endif %} {%endif%}
+            <button class="btn btn-lg btn-login" id="foundbuyer">Found Buyer</button>
+            <div id="solditem" style="display: none;">
+                <form action="editproduct" method="POST" onsubmit="alert('Are you sure?')">
+                    <input type="text" name="buyername" value="">
+                    <input type="hidden" name="productpk" value="{{products.pk}}">
+                    <input type="hidden" name="solditem" value="solditem">
+                    <input type="submit" value="sell item">
+                </form>
+            </div>
+            {% else %}
+            <button class="btn btn-lg btn-login" id="wantchangebuyer">Change Buyer</button>
+            <div id="changebuyer" style="display: none;">
+                <form action="editproduct" method="POST" onsubmit="alert('Are you sure?')">
+                    <input type="text" name="buyername" value="">
+                    <input type="hidden" name="productpk" value="{{products.pk}}">
+                    <input type="hidden" name="changebuyer" value="changebuyer">
+                    <input type="submit" value="confirm">
+                </form>
+            </div>
+            {% endif %} {%endif%} {% if error %} {{error}} {% endif %}
+
         </div>
     </div>
     <!-- /.card -->
@@ -59,4 +73,13 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{% static 'vendor/jquery/jquery.min.js' %} "></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    $("#foundbuyer").click(function() {
+        $("#solditem").toggle();
+    });
+
+    $("#wantchangebuyer").click(function() {
+        $("#changebuyer").toggle();
+    });
+</script>
 {% endblock %}

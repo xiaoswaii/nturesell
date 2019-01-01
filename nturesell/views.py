@@ -154,15 +154,42 @@ def editproduct(request):
     if 'solditem' in request.POST:
         productpk=request.POST['productpk']
         buyername = request.POST['buyername']
-        buyer = AbstractUser.objects.get(username=buyername)
-        print(buyer.id)
-        products=Product.objects.get(id=productpk)
-        products.buyer=buyer
-        products.status = 0
-        products.save()
-        products = Product.objects.filter(
-            seller__username=request.user.username)
-        return render(request,'selldisplay.html',locals())
+        try:
+            buyer = AbstractUser.objects.get(username=buyername)
+        except:
+            buyer = None
+        if buyer is None:
+            error="User not Found!Please make sure you enter correct username"
+            products = Product.objects.get(id=productpk)
+            return render(request,'editproduct.html',locals())
+        else:
+            buyer = AbstractUser.objects.get(username=buyername)
+            print(buyer.id)
+            products=Product.objects.get(id=productpk)
+            products.buyer=buyer
+            products.status = 0
+            products.save()
+            products = Product.objects.get(id=productpk)
+        return render(request,'editproduct.html',locals())
+    if 'changebuyer' in request.POST:
+        productpk=request.POST['productpk']
+        buyername = request.POST['buyername']
+        try:
+            buyer = AbstractUser.objects.get(username=buyername)
+        except:
+            buyer = None
+        if buyer is None:
+            error="User not Found!Please make sure you enter correct username"
+            products = Product.objects.get(id=productpk)
+            return render(request,'editproduct.html',locals())
+        else:
+            buyer = AbstractUser.objects.get(username=buyername)
+            print(buyer.id)
+            products=Product.objects.get(id=productpk)
+            products.buyer=buyer
+            products.save()
+            products = Product.objects.get(id=productpk)
+        return render(request,'editproduct.html',locals())
     if request.method == "POST":
         productpk = request.POST["productpk"]
         products = Product.objects.get(id=productpk)

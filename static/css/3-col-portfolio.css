@@ -37,3 +37,51 @@ body {
     border: 2px solid rgb(0, 140, 255);
     background-color: rgb(0, 140, 255);
 }
+
+#edit {
+    border: 2px solid grey;
+    border-radius: 5px;
+    background-color: grey;
+    margin-bottom: 10%;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white;
+}
+
+#edit:hover {
+    cursor: pointer;
+    border: 2px solid rgb(0, 140, 255);
+    background-color: rgb(0, 140, 255);
+}
+
+#solditem {
+    border: 2px solid grey;
+    border-radius: 5px;
+    background-color: grey;
+    margin-bottom: 10%;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white;
+}
+
+#solditem:hover {
+    cursor: pointer;
+    border: 2px solid rgb(0, 140, 255);
+    background-color: rgb(0, 140, 255);
+}
+
+#changebuyer {
+    border: 2px solid grey;
+    border-radius: 5px;
+    background-color: grey;
+    margin-bottom: 10%;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: white;
+}
+
+#changebuyer:hover {
+    cursor: pointer;
+    border: 2px solid rgb(0, 140, 255);
+    background-color: rgb(0, 140, 255);
+}

@@ -25,7 +25,7 @@ from chat import views as chatView
 
 
 urlpatterns = [
-    path('', views.login),
+    path('', views.home),
     path('sell/',views.sell),
     path('logout/',views.logout),
     path('home/', views.home, name = "home"),

@@ -51,6 +51,9 @@ class Product(models.Model):
         default=datetime.now() + timedelta(days=30))
     profile = models.FileField(upload_to='products', blank=False)
     information = models.CharField(max_length=200, blank=True)
+    status = models.IntegerField(default=1)
+    buyer = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="buyer",blank=True, null=True)
 
 
 class Comment(models.Model):

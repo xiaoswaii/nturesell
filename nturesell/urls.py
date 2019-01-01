@@ -33,6 +33,7 @@ urlpatterns = [
     path('login/', views.login),
     path('profile/', views.profile),
     path('productdetail',views.productdetail),
+    path('editproduct',views.editproduct),
     url(r'^chat/', include('chat.urls')),
 ]
 

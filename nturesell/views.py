@@ -18,7 +18,7 @@ def home(request):
         products2 = Product.objects.filter(information__icontains=productname)
         products = (list(set(chain(products1, products2))))
     else:
-        products = Product.objects.all()
+        products = Product.objects.filter(status=1)
     return render(request, 'home.html', locals())
 
 
@@ -141,3 +141,30 @@ def productdetail(request):
         comment = Comment.objects.filter(productpk=productpk)
         return render(request, 'productdetail.html', locals())
     return render(request, 'productdetail.html', locals())
+
+@login_required
+def editproduct(request):
+    if 'deleteitem' in request.POST:
+        productpk=request.POST['productpk']
+        Product.objects.get(
+            id=productpk).delete()
+        products = Product.objects.filter(
+            seller__username=request.user.username)
+        return render(request,'selldisplay.html',locals())
+    if 'solditem' in request.POST:
+        productpk=request.POST['productpk']
+        buyername = request.POST['buyername']
+        buyer = AbstractUser.objects.get(username=buyername)
+        print(buyer.id)
+        products=Product.objects.get(id=productpk)
+        products.buyer=buyer
+        products.status = 0
+        products.save()
+        products = Product.objects.filter(
+            seller__username=request.user.username)
+        return render(request,'selldisplay.html',locals())
+    if request.method == "POST":
+        productpk = request.POST["productpk"]
+        products = Product.objects.get(id=productpk)
+    return render(request,'editproduct.html',locals())
+    

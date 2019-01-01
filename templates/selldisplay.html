@@ -1,9 +1,6 @@
-{% extends "base.html" %} {% load static %} 
-{% block stylesheet %} 
+{% extends "base.html" %} {% load static %} {% block stylesheet %}
 <link href="{% static 'css/home.css' %}" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
-{% endblock %} 
-{% block nevitem %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"> {% endblock %} {% block nevitem %}
 <li class="nav-item">
     <a class="nav-link" href="/home">Home
         <span class="sr-only"></span>
@@ -32,40 +29,48 @@
 
     <!--Search Bar-->
     <form action="." method="POST" class="card card-sm">
-    <div class="card-body row no-gutters align-items-center">
-        <!--end of col-->
-        <div class="col">
-            <input class="form-control form-control-lg form-control-borderless" name="productname" type="search" placeholder="Search product" value="">
+        <div class="card-body row no-gutters align-items-center">
+            <!--end of col-->
+            <div class="col">
+                <input class="form-control form-control-lg form-control-borderless" name="productname" type="search" placeholder="Search product" value="">
+            </div>
+            <input type="hidden" value="searchproduct" name="searchproduct">
+            <!--end of col-->
+            <div class="col-auto">
+                <button class="btn btn-lg btn-success" type="submit">Search</button>
+            </div>
+            <!--end of col-->
         </div>
-        <input type="hidden" value="searchproduct" name="searchproduct">
-        <!--end of col-->
-        <div class="col-auto">
-            <button class="btn btn-lg btn-success" type="submit">Search</button>
-        </div>
-        <!--end of col-->
-    </div>
     </form>
 
     <div class="row">
         {% for product in products %}
-            <div class="col-lg-4 col-sm-6 portfolio-item">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="/media/{{product.profile}}"></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">{{product.productname}}</a>
-                        </h4>
-                        <p class="card-text">Amount:{{product.amount}}</p>
-                        <p class="card-text">NTD:{{product.price}}</p>
-                    </div>
-                    <input type="submit" value="Edit" id="details"></input>
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" src="/media/{{product.profile}}"></a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">{{product.productname}}</a>
+                    </h4>
+                    <p class="card-text">Amount:{{product.amount}}</p>
+                    <p class="card-text">NTD:{{product.price}}</p>
+                    {% if product.status == 1 %}
+                    <p class="card-text">Status:Still Available</p>
+                    {% else %}
+                    <p class="card-text">Status:Sold Out</p>
+                    {% endif %}
                 </div>
+                <form action="/editproduct" method="POST">
+                    <input type="hidden" name="productpk" value={{product.pk}}>
+                    <input type="submit" value="Edit" id="edit"></input>
+                </form>
             </div>
+        </div>
         {% endfor %}
     </div>
     <!-- /.row -->
 
-    
+
 
 </div>
 <!-- /.container -->

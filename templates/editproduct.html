@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% load static %} {% block stylesheet %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"> {% endblock %} {% block nevitem %}
+<li class="nav-item active">
+    <a class="nav-link" href="/home">Home
+        <span class="sr-only"></span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/sell/">Selling</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/profile">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/chat">Chat</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/logout">Log out</a>
+</li>
+{% endblock %} {% block mainbody %}
+<!-- Navigation -->
+<!-- Page Content -->
+<div class="container">
+    <!-- /.col-lg-3 -->
+    {% if products %}
+    <div class="card mt-4">
+        <img class="card-img-top img-fluid" src="/media/{{products.profile}}" alt="">
+        <div class="card-body">
+            <h3 class="card-title">{{products.productname}}</h3>
+            <h4>NTD{{products.price}}</h4>
+            <p class="card-text">{{products.information}}</p>
+            <form action="editproduct" method="POST">
+                <input type="hidden" name="productpk" value="{{products.pk}}">
+                <input type="hidden" name="deleteitem" value="deleteitem">
+                <input type="submit" value="Delete this item">
+            </form>
+            <form action="editproduct" method="POST" onsubmit="alert('Are you sure?')">
+                <input type="text" name="buyername" value="">
+                <input type="hidden" name="productpk" value="{{products.pk}}">
+                <input type="hidden" name="solditem" value="solditem">
+                <input type="submit" value="sell item">
+            </form>
+            {%endif%}
+        </div>
+    </div>
+    <!-- /.card -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; NTURESELL 2018</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %} "></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+{% endblock %}

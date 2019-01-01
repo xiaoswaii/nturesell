@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% load static %} {% block stylesheet %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet"> {% endblock %} {% block nevitem %}
+<li class="nav-item active">
+    <a class="nav-link" href="/home">Home
+        <span class="sr-only"></span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/sell/">Selling</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/profile">Profile</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/chat">Chat</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/logout">Log out</a>
+</li>
+{% endblock %} {% block mainbody %}
+<!-- Navigation -->
+<!-- Page Content -->
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Seller</th>
+                <th>Amount</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{product.productname}}</td>
+                <td>{{product.seller}}</td>
+                <td>{{product.amount}}</td>
+                <td>{{product.price}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; NTURESELL 2018</p>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %} "></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    $("#foundbuyer").click(function() {
+        $("#solditem").toggle();
+    });
+
+    $("#wantchangebuyer").click(function() {
+        $("#changebuyer").toggle();
+    });
+</script>
+{% endblock %}

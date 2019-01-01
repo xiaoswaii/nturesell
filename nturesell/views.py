@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.http import HttpResponse
 from django.contrib.auth.models import User as AbstractUser
-from users.models import User, Product, Message, Comment, UserProfile, ChatRoom
+from users.models import User, Product, Message, Comment, UserProfile, ChatRoom, Wallet
 from users.form import UploadProductForm, UploadProfileForm
 from django.contrib.auth.decorators import login_required
 from itertools import chain
@@ -165,12 +165,24 @@ def editproduct(request):
             return render(request,'editproduct.html',locals())
         else:
             buyer = AbstractUser.objects.get(username=buyername)
-            print(buyer.id)
             products=Product.objects.get(id=productpk)
-            products.buyer=buyer
-            products.status = 0
-            products.save()
-            products = Product.objects.get(id=productpk)
+            try:
+                wallet = Wallet.objects.get(user=buyer)
+            except:
+                wallet = None
+            if wallet is None:
+                Wallet.objects.create(user=buyer,amount=products.price)
+            else:
+                newbuyupdate=Wallet.objects.get(user=buyer)
+                nowspend=0
+                nowspend=newbuyupdate.amount
+                newbuyupdate.amount=nowspend+products.price
+                newbuyupdate.save()
+        products.buyer=buyer
+        products.status = 0
+        products.save()
+        products = Product.objects.get(id=productpk)
+        
         return render(request,'editproduct.html',locals())
     if 'changebuyer' in request.POST:
         productpk=request.POST['productpk']
@@ -185,8 +197,24 @@ def editproduct(request):
             return render(request,'editproduct.html',locals())
         else:
             buyer = AbstractUser.objects.get(username=buyername)
-            print(buyer.id)
             products=Product.objects.get(id=productpk)
+            reducebuyupdate=Wallet.objects.get(user=products.buyer)
+            newreducebuyer=0
+            newreducebuyer=reducebuyupdate.amount
+            reducebuyupdate.amount=newreducebuyer-products.price
+            reducebuyupdate.save()
+            try:
+                wallet = Wallet.objects.get(user=buyer)
+            except:
+                wallet = None
+            if wallet is None:
+                Wallet.objects.create(user=buyer,amount=products.price)
+            else:
+                newchangebuyerupdate=Wallet.objects.get(user=buyer)
+                nowspend=0
+                nowspend=newchangebuyerupdate.amount
+                newchangebuyerupdate.amount=nowspend+products.price
+                newchangebuyerupdate.save()
             products.buyer=buyer
             products.save()
             products = Product.objects.get(id=productpk)
@@ -196,3 +224,6 @@ def editproduct(request):
         products = Product.objects.get(id=productpk)
     return render(request,'editproduct.html',locals())
     
+def boughthistory(request):
+    products=Product.objects.filter(buyer=request.user)
+    return render(request,'boughthistory.html',locals())

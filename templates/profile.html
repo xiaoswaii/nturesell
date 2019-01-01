@@ -1,9 +1,5 @@
-{% extends "base.html" %}
-{% load static %} 
-{% block stylesheet %}
-<link href="{% static 'css/profile.css' %}" rel="stylesheet"> 
-{% endblock %} 
-{% block nevitem %}
+{% extends "base.html" %} {% load static %} {% block stylesheet %}
+<link href="{% static 'css/profile.css' %}" rel="stylesheet"> {% endblock %} {% block nevitem %}
 <li class="nav-item">
     <a class="nav-link" href="/home">Home
         <span class="sr-only"></span>
@@ -21,40 +17,43 @@
 <li class="nav-item">
     <a class="nav-link" href="/logout">Log Out</a>
 </li>
-{% endblock %} 
-{% block mainbody %}
+{% endblock %} {% block mainbody %}
 <div id="namecard">
     {% if avatar %}
     <form method="POST" id="changeprofilepic" action="." enctype="multipart/form-data">
-        <img src= "/media/{{avatar.profile}}" alt="/static/images/default.jpg">
+        <img src="/media/{{avatar.profile}}" alt="/static/images/default.jpg">
         <input type="hidden" name="user" id='user' value="{{user.pk}}">
-        <input type="file" class="form-control-file" name ="profile" id="profile" onchange="up()" value="" style="display:none;" required>
+        <input type="file" class="form-control-file" name="profile" id="profile" onchange="up()" value="" style="display:none;" required>
         <input type="submit" name="submit" id="submit" style="display: none;">
     </form>
     {% else %}
     <form method="POST" id="changeprofilepic" action="." enctype="multipart/form-data">
-        <img src= "/static/images/default.png" alt="/static/images/default.jpg">
+        <img src="/static/images/default.png" alt="/static/images/default.jpg">
         <input type="hidden" name="user" id='user' value="{{user.pk}}">
-        <input type="file" class="form-control-file" name = "profile" onchange="up()" id="profile" value="" style="display:none;" required>
+        <input type="file" class="form-control-file" name="profile" onchange="up()" id="profile" value="" style="display:none;" required>
         <input type="submit" name="submit" id="submit" style="display: none;">
     </form>
-    {% endif %}
-    {% if profile %}
-    <div id= "right">
+    {% endif %} {% if profile %}
+    <div id="right">
         帳號：{{profile.user.username}} <br> 暱稱：{{profile.nickname}} <br> 電子郵件：{{profile.ntumail}}
-    <br>
+        <br>
         <form method="POST" action=".">
             <input type="hidden" value="whatisell" name="whatisell">
-            <button class="btn btn-login btn-sm"  type="submit">What I Sell</button>
+            <button class="btn btn-login btn-sm" type="submit">What I Sell</button>
+        </form>
+        <form method="POST" action="/boughthistory">
+            <input type="hidden" value="whatibought" name="whatibought">
+            <button class="btn btn-login btn-sm" type="submit">What I bought</button>
         </form>
     </div>
     {% endif %}
 </div>
 <script type="text/javascript">
-    $("img").click(function(){
+    $("img").click(function() {
         $("#profile").click();
     });
-    function up(){
+
+    function up() {
         $("#submit").click();
     }
 </script>

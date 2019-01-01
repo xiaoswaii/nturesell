@@ -34,6 +34,7 @@ urlpatterns = [
     path('profile/', views.profile),
     path('productdetail',views.productdetail),
     path('editproduct',views.editproduct),
+    path('boughthistory',views.boughthistory),
     url(r'^chat/', include('chat.urls')),
 ]
 

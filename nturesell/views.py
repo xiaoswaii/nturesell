@@ -44,6 +44,7 @@ def register(request):
                 userinfo = User.objects.create(
                     user=user, nickname=nickname, ntumail=ntumail)
                 userinfo.save()
+                message = "Successfully register"
         else:
             message = "confirm password is different from password"
             return render(request, "login.html", locals())
@@ -72,7 +73,7 @@ def login(request):
             elif request.POST['submit-type'] == "Register Now":
                 return register(request)
         except:
-            message = "account or password is wrong!!"
+            message="Register unsucessful"
     return render(request, "login.html", locals())
 
 

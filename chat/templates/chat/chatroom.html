@@ -42,7 +42,8 @@
                     {% if receive %}
                     <div class="incoming_msg_img"> <img id="avatar" src="/media/{{receive.profile}}" alt="sunil"> </div>
                     {% else %}
-                    <div class="incoming_msg_img"> <img id="avatar" src="/static/images/default.jpg"" alt="sunil"> </div>
+                    <div class="incoming_msg_img">
+                        <img id="avatar" src="/static/images/default.jpg"  alt="sunil "> </div>
                     {% endif %}
                     <div class="received_msg">
                         <div class="received_with_msg">
@@ -53,7 +54,7 @@
                 </div>
                 {%endifequal%} {%endfor%}
             </div>
-            <div class="type_msg">
+            <div class="type_msg ">
                 <div class="input_msg_write">
                     <form action="." method="POST">
                         <input type="hidden" name="talking" value="talking">
@@ -76,15 +77,15 @@
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
         var message = data['message'];
-        var images = $(avatar).attr("src");
+        var images = $(avatar).attr("src ");
         var d = new Date();
-        var strDate =   d.getFullYear() + "/" 
-                        + (d.getMonth() + 1) + "/"
+        var strDate =   d.getFullYear() + "/ " 
+                        + (d.getMonth() + 1) + "/ "
                         + d.getDate() + " "
-                        + d.getHours() + ":"
+                        + d.getHours() + ": "
                         + d.getMinutes();
 
-        var tag = (`<div class='incoming_msg'>
+        /*var tag = (`<div class='incoming_msg'>
                         <div class= 'incoming_msg_img'>
                                 <img id='avatar' src='${images}' alt='sunil'>
                         </div>
@@ -94,7 +95,20 @@
                             <span class='time_date'>${strDate}</span>
                             </div>
                         </div>
+                    </div >`);*/
+                    
+         var tag = (`<div class='outgoing_msg'>
+                        <div class= 'outgoing_msg_img'>
+                                <img id='avatar' src='${images}' alt='sunil'>
+                        </div>
+                        <div class='sent_msg'>
+                            
+                            <p>${message}</p>
+                            <span class='time_date'>${strDate}</span>
+                            
+                        </div>
                     </div >`);
+        
         $(msg_history).append(tag);
     };
 

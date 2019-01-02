@@ -225,6 +225,13 @@ def editproduct(request):
     return render(request,'editproduct.html',locals())
     
 def boughthistory(request):
-    products=Product.objects.filter(buyer=request.user)
-    wallet=Wallet.objects.get(user=request.user)
-    return render(request,'boughthistory.html',locals())
+    try:
+        wallet = Wallet.objects.get(user=request.user)
+    except:
+        wallet = None
+    if wallet is None:
+        message="You havent bought anything"
+        return render(request,'boughthistory.html',locals())
+    else:
+        products=Product.objects.filter(buyer=request.user)
+        return render(request,'boughthistory.html',locals())

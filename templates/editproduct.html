@@ -32,7 +32,7 @@
             <form action="editproduct" method="POST">
                 <input type="hidden" name="productpk" value="{{products.pk}}">
                 <input type="hidden" name="deleteitem" value="deleteitem">
-                <input type="submit" value="Delete this item">
+                <input type="submit" class="btn btn-lg btn-login" value="Delete this item">
             </form>
             {% if products.status == 1%}
             <button class="btn btn-lg btn-login" id="foundbuyer">Found Buyer</button>
@@ -41,7 +41,7 @@
                     <input type="text" name="buyername" value="" placeholder="Username of Buyer">
                     <input type="hidden" name="productpk" value="{{products.pk}}">
                     <input type="hidden" name="solditem" value="solditem">
-                    <input type="submit" value="sell item">
+                    <input type="submit" class="btn btn-lg btn-login" value="sell item">
                 </form>
             </div>
             {% else %}
@@ -51,7 +51,7 @@
                     <input type="text" name="buyername" value="" placeholder="Username of Buyer">
                     <input type="hidden" name="productpk" value="{{products.pk}}">
                     <input type="hidden" name="changebuyer" value="changebuyer">
-                    <input type="submit" value="confirm">
+                    <input type="submit" class="btn btn-lg btn-login" value="confirm">
                 </form>
             </div>
             {% endif %} {%endif%} {% if error %} {{error}} {% endif %}

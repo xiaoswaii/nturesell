@@ -21,6 +21,9 @@
 <!-- Navigation -->
 <!-- Page Content -->
 <div class="container">
+    {% if message %}
+    <h1>{{message}}</h1>
+    {% endif %}
     <table class="table">
         <thead>
             <tr>
@@ -31,14 +34,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for product in products %}
+            {% if products %} {% for product in products %}
             <tr>
                 <td>{{product.productname}}</td>
                 <td>{{product.seller}}</td>
                 <td>{{product.amount}}</td>
                 <td>{{product.price}}</td>
             </tr>
-            {% endfor %}
+            {% endfor %} {% endif %}
             <tr>
                 {% if wallet %}
                 <td><b>Total Spend</b></td>

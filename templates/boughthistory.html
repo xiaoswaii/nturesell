@@ -39,6 +39,14 @@
                 <td>{{product.price}}</td>
             </tr>
             {% endfor %}
+            <tr>
+                {% if wallet %}
+                <td><b>Total Spend</b></td>
+                <td></td>
+                <td></td>
+                <td>{{wallet.amount}}</td>
+                {% endif %}
+            </tr>
         </tbody>
     </table>
 

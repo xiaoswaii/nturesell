@@ -226,4 +226,5 @@ def editproduct(request):
     
 def boughthistory(request):
     products=Product.objects.filter(buyer=request.user)
+    wallet=Wallet.objects.get(user=request.user)
     return render(request,'boughthistory.html',locals())

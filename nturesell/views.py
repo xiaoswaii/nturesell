@@ -155,70 +155,79 @@ def editproduct(request):
     if 'solditem' in request.POST:
         productpk=request.POST['productpk']
         buyername = request.POST['buyername']
-        try:
-            buyer = AbstractUser.objects.get(username=buyername)
-        except:
-            buyer = None
-        if buyer is None:
-            error="User not Found!Please make sure you enter correct username"
+        if(buyername != request.user.username):
+            try:
+                buyer = AbstractUser.objects.get(username=buyername)
+            except:
+                buyer = None
+            if buyer is None:
+                error="User not Found!Please make sure you enter correct username"
+                products = Product.objects.get(id=productpk)
+                return render(request,'editproduct.html',locals())
+            else:
+                buyer = AbstractUser.objects.get(username=buyername)
+                products=Product.objects.get(id=productpk)
+                try:
+                    wallet = Wallet.objects.get(user=buyer)
+                except:
+                    wallet = None
+                if wallet is None:
+                    Wallet.objects.create(user=buyer,amount=products.price)
+                else:
+                    newbuyupdate=Wallet.objects.get(user=buyer)
+                    nowspend=0
+                    nowspend=newbuyupdate.amount
+                    newbuyupdate.amount=nowspend+products.price
+                    newbuyupdate.save()
+            products.buyer=buyer
+            products.status = 0
+            products.save()
             products = Product.objects.get(id=productpk)
             return render(request,'editproduct.html',locals())
         else:
-            buyer = AbstractUser.objects.get(username=buyername)
-            products=Product.objects.get(id=productpk)
-            try:
-                wallet = Wallet.objects.get(user=buyer)
-            except:
-                wallet = None
-            if wallet is None:
-                Wallet.objects.create(user=buyer,amount=products.price)
-            else:
-                newbuyupdate=Wallet.objects.get(user=buyer)
-                nowspend=0
-                nowspend=newbuyupdate.amount
-                newbuyupdate.amount=nowspend+products.price
-                newbuyupdate.save()
-        products.buyer=buyer
-        products.status = 0
-        products.save()
-        products = Product.objects.get(id=productpk)
-        
-        return render(request,'editproduct.html',locals())
+            products = Product.objects.get(id=productpk)
+            error="cant sell item to yourself"
+            return render(request,'editproduct.html',locals())
     if 'changebuyer' in request.POST:
         productpk=request.POST['productpk']
         buyername = request.POST['buyername']
-        try:
-            buyer = AbstractUser.objects.get(username=buyername)
-        except:
-            buyer = None
-        if buyer is None:
-            error="User not Found!Please make sure you enter correct username"
-            products = Product.objects.get(id=productpk)
+        if(buyername != request.user.username):
+            try:
+                buyer = AbstractUser.objects.get(username=buyername)
+            except:
+                buyer = None
+            if buyer is None:
+                error="User not Found!Please make sure you enter correct username"
+                products = Product.objects.get(id=productpk)
+                return render(request,'editproduct.html',locals())
+            else:
+                buyer = AbstractUser.objects.get(username=buyername)
+                products=Product.objects.get(id=productpk)
+                reducebuyupdate=Wallet.objects.get(user=products.buyer)
+                newreducebuyer=0
+                newreducebuyer=reducebuyupdate.amount
+                reducebuyupdate.amount=newreducebuyer-products.price
+                reducebuyupdate.save()
+                try:
+                    wallet = Wallet.objects.get(user=buyer)
+                except:
+                    wallet = None
+                if wallet is None:
+                    Wallet.objects.create(user=buyer,amount=products.price)
+                else:
+                    newchangebuyerupdate=Wallet.objects.get(user=buyer)
+                    nowspend=0
+                    nowspend=newchangebuyerupdate.amount
+                    newchangebuyerupdate.amount=nowspend+products.price
+                    newchangebuyerupdate.save()
+                products.buyer=buyer
+                products.save()
+                products = Product.objects.get(id=productpk)
             return render(request,'editproduct.html',locals())
         else:
-            buyer = AbstractUser.objects.get(username=buyername)
-            products=Product.objects.get(id=productpk)
-            reducebuyupdate=Wallet.objects.get(user=products.buyer)
-            newreducebuyer=0
-            newreducebuyer=reducebuyupdate.amount
-            reducebuyupdate.amount=newreducebuyer-products.price
-            reducebuyupdate.save()
-            try:
-                wallet = Wallet.objects.get(user=buyer)
-            except:
-                wallet = None
-            if wallet is None:
-                Wallet.objects.create(user=buyer,amount=products.price)
-            else:
-                newchangebuyerupdate=Wallet.objects.get(user=buyer)
-                nowspend=0
-                nowspend=newchangebuyerupdate.amount
-                newchangebuyerupdate.amount=nowspend+products.price
-                newchangebuyerupdate.save()
-            products.buyer=buyer
-            products.save()
             products = Product.objects.get(id=productpk)
-        return render(request,'editproduct.html',locals())
+            error="cant sell item to yourself"
+            return render(request,'editproduct.html',locals())
     if request.method == "POST":
         productpk = request.POST["productpk"]
         products = Product.objects.get(id=productpk)

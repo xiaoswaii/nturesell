@@ -29,7 +29,7 @@
             <h3 class="card-title">{{products.productname}}</h3>
             <h4>NTD{{products.price}}</h4>
             <p class="card-text">{{products.information}}</p>
-            <form action="editproduct" method="POST">
+            <form action="editproduct" method="POST" onsubmit="return confirm('Are you sure?')">
                 <input type="hidden" name="productpk" value="{{products.pk}}">
                 <input type="hidden" name="deleteitem" value="deleteitem">
                 <input type="submit" class="btn btn-lg btn-login" value="Delete this item">
@@ -37,7 +37,7 @@
             {% if products.status == 1%}
             <button class="btn btn-lg btn-login" id="foundbuyer">Found Buyer</button>
             <div id="solditem" style="display: none;">
-                <form action="editproduct" method="POST" onsubmit="alert('Are you sure?')">
+                <form action="editproduct" method="POST" onsubmit="return confirm('Are you sure?')">
                     <input type="text" name="buyername" value="" placeholder="Username of Buyer">
                     <input type="hidden" name="productpk" value="{{products.pk}}">
                     <input type="hidden" name="solditem" value="solditem">
